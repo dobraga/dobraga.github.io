@@ -2,7 +2,7 @@ baseurl = "/"
 languageCode = "pt-br"
 title = "dobraga"
 theme = "hugo-lithium"
-googleAnalytics = ""
+googleAnalytics = "UA-93877401-1"
 disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
