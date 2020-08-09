@@ -1,0 +1,34 @@
+---
+title: "Text Mining with R - A Tidy Approach"
+author: ''
+date: '2020-08-08'
+slug: tidytext
+categories: []
+tags: []
+output:
+  blogdown::html_page:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+---
+
+# O formato tidy para texto
+
+Usando o princípio tidy para dados é muito útiol pois torna a manipulação de dados mais simples e efetivas, isso também serve para dados textuais, a estrutura tidy tem a seguinte estrutura:
+
+- Cada variável é uma coluna;
+- Cada observação é uma linha;
+- Cada variável deve possuir apenas um tipo.
+
+Sendo assim, é definido que o formato tidy para texto é uma tabela com um token por linha, o token é a unidade minima de análise, como por exemplo palavras, estamos interessados em utilizar para uma análisem e tokenização é o processo de separar o texto em tokens.
+
+
+```{r}
+text <- c("Because I could not stop for Death -",
+          "He kindly stopped for me -",
+          "The Carriage held but just Ourselves -",
+          "and Immortality")
+
+text
+```
+

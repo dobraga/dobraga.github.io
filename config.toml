@@ -2,7 +2,7 @@ baseurl = "/"
 languageCode = "pt-br"
 title = "dobraga"
 theme = "hugo-lithium"
-googleAnalytics = "UA-93877401-1"
+googleAnalytics = ""
 disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
@@ -10,14 +10,14 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     post = "/:year/:month/:day/:slug/"
 
 [[menu.main]]
-    name = "About"
+    name = "Sobre"
     url = "/about/"
 [[menu.main]]
     name = "GitHub"
-    url = "https://github.com/rstudio/blogdown"
+    url = "https://github.com/dobraga"
 [[menu.main]]
-    name = "Twitter"
-    url = "https://twitter.com/rstudio"
+    name = "Linkedin"
+    url = "https://www.linkedin.com/in/douglas-martins-mendes-braga-904495b5/"
 
 [params]
     description = "A website built through Hugo and blogdown."
@@ -25,17 +25,19 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     # options for highlight.js (version, additional languages, and theme)
     highlightjsVersion = "9.12.0"
     highlightjsCDN = "//cdnjs.cloudflare.com/ajax/libs"
-    highlightjsLang = ["r", "yaml"]
+    highlightjsLang = ["r", "yaml", "python"]
     highlightjsTheme = "github"
 
     MathJaxCDN = "//cdnjs.cloudflare.com/ajax/libs"
     MathJaxVersion = "2.7.5"
 
     # path to the favicon, under "static"
-    favicon = "favicon.ico"
+    # https://www.iconfinder.com/iconsets/artificial-intelligence-6
+    favicon = "iconfinder_ArtificialIntelligence25_2890583.png"
 
     [params.logo]
-    url = "logo.png"
+    url = "iconfinder_ArtificialIntelligence25_2890583.png"
+    
     width = 50
     height = 50
     alt = "Logo"

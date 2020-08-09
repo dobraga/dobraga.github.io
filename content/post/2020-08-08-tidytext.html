@@ -1,0 +1,41 @@
+---
+title: "Text Mining with R - A Tidy Approach"
+author: ''
+date: '2020-08-08'
+slug: tidytext
+categories: []
+tags: []
+output:
+  blogdown::html_page:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#o-formato-tidy-para-texto"><span class="toc-section-number">1</span> O formato tidy para texto</a></li>
+</ul>
+</div>
+
+<div id="o-formato-tidy-para-texto" class="section level1">
+<h1><span class="header-section-number">1</span> O formato tidy para texto</h1>
+<p>Usando o princípio tidy para dados é muito útiol pois torna a manipulação de dados mais simples e efetivas, isso também serve para dados textuais, a estrutura tidy tem a seguinte estrutura:</p>
+<ul>
+<li>Cada variável é uma coluna;</li>
+<li>Cada observação é uma linha;</li>
+<li>Cada variável deve possuir apenas um tipo.</li>
+</ul>
+<p>Sendo assim, é definido que o formato tidy para texto é uma tabela com um token por linha, o token é a unidade minima de análise, como por exemplo palavras, estamos interessados em utilizar para uma análisem e tokenização é o processo de separar o texto em tokens.</p>
+<pre class="r"><code>text &lt;- c(&quot;Because I could not stop for Death -&quot;,
+          &quot;He kindly stopped for me -&quot;,
+          &quot;The Carriage held but just Ourselves -&quot;,
+          &quot;and Immortality&quot;)
+
+text</code></pre>
+<pre><code>## [1] &quot;Because I could not stop for Death -&quot;  
+## [2] &quot;He kindly stopped for me -&quot;            
+## [3] &quot;The Carriage held but just Ourselves -&quot;
+## [4] &quot;and Immortality&quot;</code></pre>
+</div>

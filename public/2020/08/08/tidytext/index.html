@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.68.3" />
+
+
+<title>Text Mining with R - A Tidy Approach - dobraga</title>
+<meta property="og:title" content="Text Mining with R - A Tidy Approach - dobraga">
+
+
+  <link href='../../../../iconfinder_ArtificialIntelligence25_2890583.png' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/iconfinder_ArtificialIntelligence25_2890583.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="https://github.com/dobraga">GitHub</a></li>
+    
+    <li><a href="https://www.linkedin.com/in/douglas-martins-mendes-braga-904495b5/">Linkedin</a></li>
+    
+    <li><a href="../../../../about/">Sobre</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">1 min read</span>
+    
+
+    <h1 class="article-title">Text Mining with R - A Tidy Approach</h1>
+
+    
+    <span class="article-date">2020-08-08</span>
+    
+
+    <div class="article-content">
+      
+
+<div id="TOC">
+<ul>
+<li><a href="#o-formato-tidy-para-texto"><span class="toc-section-number">1</span> O formato tidy para texto</a></li>
+</ul>
+</div>
+
+<div id="o-formato-tidy-para-texto" class="section level1">
+<h1><span class="header-section-number">1</span> O formato tidy para texto</h1>
+<p>Usando o princípio tidy para dados é muito útiol pois torna a manipulação de dados mais simples e efetivas, isso também serve para dados textuais, a estrutura tidy tem a seguinte estrutura:</p>
+<ul>
+<li>Cada variável é uma coluna;</li>
+<li>Cada observação é uma linha;</li>
+<li>Cada variável deve possuir apenas um tipo.</li>
+</ul>
+<p>Sendo assim, é definido que o formato tidy para texto é uma tabela com um token por linha, o token é a unidade minima de análise, como por exemplo palavras, estamos interessados em utilizar para uma análisem e tokenização é o processo de separar o texto em tokens.</p>
+<pre class="r"><code>text &lt;- c(&quot;Because I could not stop for Death -&quot;,
+          &quot;He kindly stopped for me -&quot;,
+          &quot;The Carriage held but just Ourselves -&quot;,
+          &quot;and Immortality&quot;)
+
+text</code></pre>
+<pre><code>## [1] &quot;Because I could not stop for Death -&quot;  
+## [2] &quot;He kindly stopped for me -&quot;            
+## [3] &quot;The Carriage held but just Ourselves -&quot;
+## [4] &quot;and Immortality&quot;</code></pre>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+
