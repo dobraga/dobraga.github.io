@@ -19,7 +19,7 @@ body {
 text-align: justify}
 </style>
 
-Esse texto é totalmente baseado no livro disponível no livro gratuito 
+Esse texto é totalmente baseado no livro gratuito 
 [Text Mining with R](https://www.tidytextmining.com/)
 
 Com isso, serão instalados os pacotes que serão utilizados.
@@ -206,154 +206,154 @@ gutenbergr::gutenberg_metadata %>%
 
 Para pegar os dados, quebrar em diversas linhas e remover stop words, podemos:
 
-```{r, message=F}
-hgwells <- gutenbergr::gutenberg_download(
-  c(35, 36, 159, 5230)
-)
+<!-- ```{r, message=F} -->
+<!-- hgwells <- gutenbergr::gutenberg_download( -->
+<!--   c(35, 36, 159, 5230) -->
+<!-- ) -->
 
-tidy_hgwells <- hgwells %>%
-  tidytext::unnest_tokens(word, text) %>%
-  anti_join(tidytext::stop_words)
+<!-- tidy_hgwells <- hgwells %>% -->
+<!--   tidytext::unnest_tokens(word, text) %>% -->
+<!--   anti_join(tidytext::stop_words) -->
 
-tidy_hgwells %>% head(20)
-```
+<!-- tidy_hgwells %>% head(20) -->
+<!-- ``` -->
 
-Quais são as palavras mais utilizadas?
+<!-- Quais são as palavras mais utilizadas? -->
 
-```{r}
-tidy_hgwells %>%
-  count(word, sort = TRUE) %>% 
-  filter(n > 150) %>% 
-  mutate(word = reorder(word, n)) %>% 
-  ggplot(aes(word, n)) + 
-  geom_col() + 
-  coord_flip()
-```
+<!-- ```{r} -->
+<!-- tidy_hgwells %>% -->
+<!--   count(word, sort = TRUE) %>%  -->
+<!--   filter(n > 150) %>%  -->
+<!--   mutate(word = reorder(word, n)) %>%  -->
+<!--   ggplot(aes(word, n)) +  -->
+<!--   geom_col() +  -->
+<!--   coord_flip() -->
+<!-- ``` -->
 
-### Bronte
+<!-- ### Bronte -->
 
-Fazendo o mesmo tratamento para os livros do Bronte, temos:
+<!-- Fazendo o mesmo tratamento para os livros do Bronte, temos: -->
 
-```{r, message=F}
-bronte <- gutenbergr::gutenberg_download(
-  c(1260, 768, 969, 9182, 767)
-)
+<!-- ```{r, message=F} -->
+<!-- bronte <- gutenbergr::gutenberg_download( -->
+<!--   c(1260, 768, 969, 9182, 767) -->
+<!-- ) -->
 
-tidy_bronte <- bronte %>%
-  tidytext::unnest_tokens(word, text) %>%
-  anti_join(tidytext::stop_words)
+<!-- tidy_bronte <- bronte %>% -->
+<!--   tidytext::unnest_tokens(word, text) %>% -->
+<!--   anti_join(tidytext::stop_words) -->
 
-tidy_bronte %>%
-  count(word, sort = TRUE) %>% 
-  filter(n > 500) %>% 
-  mutate(word = reorder(word, n)) %>% 
-  ggplot(aes(word, n)) + 
-  geom_col() + 
-  coord_flip()
-```
-
-
-```{r}
-frequency <- bind_rows(
-  mutate(tidy_bronte, author = "Brontë Sisters"),
-  mutate(tidy_hgwells, author = "H.G. Wells"),
-  mutate(tidy_books, author = "Jane Austen")
-) %>% 
-  mutate(
-    word = stringr::str_extract(word, "[a-z']+")
-  ) %>% 
-  count(author, word) %>% 
-  mutate(prop = n/sum(n)) %>% 
-  select(-n) %>% 
-  tidyr::spread(author, prop, fill = 0)
-
-frequency
-```
-
-```{r}
-frequency <- frequency %>% 
-  gather(author, proportion, `Brontë Sisters`:`H.G. Wells`) 
+<!-- tidy_bronte %>% -->
+<!--   count(word, sort = TRUE) %>%  -->
+<!--   filter(n > 500) %>%  -->
+<!--   mutate(word = reorder(word, n)) %>%  -->
+<!--   ggplot(aes(word, n)) +  -->
+<!--   geom_col() +  -->
+<!--   coord_flip() -->
+<!-- ``` -->
 
 
-frequency %>% 
-  na.omit() %>% 
-  ggplot(
-    aes(
-      x = proportion, 
-      y = `Jane Austen`, 
-      color = abs(`Jane Austen` - proportion)
-    )
-  ) +
-  geom_abline(color = "gray40", lty = 2) +
-  geom_jitter(
-    alpha = 0.1, size = 2.5, width = 0.3, height = 0.3
-  ) +
-  geom_text(
-    aes(label = word), 
-    check_overlap = TRUE, vjust = 1.5
-  ) + 
-  scale_x_log10(
-    labels = scales::percent_format()
-  ) +
-  scale_y_log10(
-    labels = scales::percent_format()
-  ) +
-  scale_color_gradient(
-    limits = c(0, 0.001), low = "darkslategray4", 
-    high = "gray75"
-  ) +
-  facet_wrap(~author, ncol = 2) +
-  theme(legend.position="none") +
-  labs(y = "Jane Austen", x = NULL)
-```
+<!-- ```{r} -->
+<!-- frequency <- bind_rows( -->
+<!--   mutate(tidy_bronte, author = "Brontë Sisters"), -->
+<!--   mutate(tidy_hgwells, author = "H.G. Wells"), -->
+<!--   mutate(tidy_books, author = "Jane Austen") -->
+<!-- ) %>%  -->
+<!--   mutate( -->
+<!--     word = stringr::str_extract(word, "[a-z']+") -->
+<!--   ) %>%  -->
+<!--   count(author, word) %>%  -->
+<!--   mutate(prop = n/sum(n)) %>%  -->
+<!--   select(-n) %>%  -->
+<!--   tidyr::spread(author, prop, fill = 0) -->
+
+<!-- frequency -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- frequency <- frequency %>%  -->
+<!--   gather(author, proportion, `Brontë Sisters`:`H.G. Wells`)  -->
 
 
-```{r}
-cor.test(
-  data = frequency[frequency$author == "Brontë Sisters",],
-  ~ proportion + `Jane Austen`
-)
-```
+<!-- frequency %>%  -->
+<!--   na.omit() %>%  -->
+<!--   ggplot( -->
+<!--     aes( -->
+<!--       x = proportion,  -->
+<!--       y = `Jane Austen`,  -->
+<!--       color = abs(`Jane Austen` - proportion) -->
+<!--     ) -->
+<!--   ) + -->
+<!--   geom_abline(color = "gray40", lty = 2) + -->
+<!--   geom_jitter( -->
+<!--     alpha = 0.1, size = 2.5, width = 0.3, height = 0.3 -->
+<!--   ) + -->
+<!--   geom_text( -->
+<!--     aes(label = word),  -->
+<!--     check_overlap = TRUE, vjust = 1.5 -->
+<!--   ) +  -->
+<!--   scale_x_log10( -->
+<!--     labels = scales::percent_format() -->
+<!--   ) + -->
+<!--   scale_y_log10( -->
+<!--     labels = scales::percent_format() -->
+<!--   ) + -->
+<!--   scale_color_gradient( -->
+<!--     limits = c(0, 0.001), low = "darkslategray4",  -->
+<!--     high = "gray75" -->
+<!--   ) + -->
+<!--   facet_wrap(~author, ncol = 2) + -->
+<!--   theme(legend.position="none") + -->
+<!--   labs(y = "Jane Austen", x = NULL) -->
+<!-- ``` -->
 
 
-```{r}
-cor.test(
-  data = frequency[frequency$author == "H.G. Wells",], 
-  ~ proportion + `Jane Austen`
-)
-```
+<!-- ```{r} -->
+<!-- cor.test( -->
+<!--   data = frequency[frequency$author == "Brontë Sisters",], -->
+<!--   ~ proportion + `Jane Austen` -->
+<!-- ) -->
+<!-- ``` -->
 
 
-# Análise de sentimentos
+<!-- ```{r} -->
+<!-- cor.test( -->
+<!--   data = frequency[frequency$author == "H.G. Wells",],  -->
+<!--   ~ proportion + `Jane Austen` -->
+<!-- ) -->
+<!-- ``` -->
 
-```{r}
-tidytext::get_sentiments("afinn") %>% head(20)
-```
 
-```{r}
-tidytext::get_sentiments("bing") %>% head(20)
-```
+<!-- # Análise de sentimentos -->
 
-```{r}
-tidytext::get_sentiments("nrc") %>% head(20)
-```
+<!-- ```{r} -->
+<!-- tidytext::get_sentiments("afinn") %>% head(20) -->
+<!-- ``` -->
 
-```{r}
-tidy_books %>% head(20)
-```
+<!-- ```{r} -->
+<!-- tidytext::get_sentiments("bing") %>% head(20) -->
+<!-- ``` -->
 
-```{r}
-nrc_joy <- tidytext::get_sentiments("nrc") %>% 
-  filter(sentiment == "joy")
-```
+<!-- ```{r} -->
+<!-- tidytext::get_sentiments("nrc") %>% head(20) -->
+<!-- ``` -->
 
-```{r, message=F}
-tidy_books %>% 
-  filter(book=="Emma") %>% 
-  inner_join(nrc_joy) %>% 
-  count(word, sort=T) %>% 
-  head(20)
-```
+<!-- ```{r} -->
+<!-- tidy_books %>% head(20) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- nrc_joy <- tidytext::get_sentiments("nrc") %>%  -->
+<!--   filter(sentiment == "joy") -->
+<!-- ``` -->
+
+<!-- ```{r, message=F} -->
+<!-- tidy_books %>%  -->
+<!--   filter(book=="Emma") %>%  -->
+<!--   inner_join(nrc_joy) %>%  -->
+<!--   count(word, sort=T) %>%  -->
+<!--   head(20) -->
+<!-- ``` -->
 
 
 
