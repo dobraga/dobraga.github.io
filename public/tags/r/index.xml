@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R on dobraga</title>
+    <link>/tags/r/</link>
+    <description>Recent content in R on dobraga</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>pt-br</language>
+    <lastBuildDate>Sat, 08 Aug 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Mineração de Textos - Uma Abordagem Tidy</title>
+      <link>/2020/08/08/tidytext/</link>
+      <pubDate>Sat, 08 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/08/08/tidytext/</guid>
+      <description>1 O formato tidy para texto 1.1 A diferença entre o formato tidy e os demais 1.2 A função unnest_tokens 1.3 Obra de Jane Austen no formato Tidy 1.4 O pacote gutenbergr 1.4.1 H.G. Wells 1.4.2 Bronte   2 Análise de sentimentos    body { text-align: justify}  Esse texto é totalmente baseado no livro disponível no livro gratuito Text Mining with R
+Com isso, serão instalados os pacotes que serão utilizados.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.68.3 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="Douglas Braga">
+<meta name="keywords" content="">
+<meta name="description" content="1 O formato tidy para texto 1.1 Obra de Jane Austen no formato Tidy 1.2 O pacote gutenbergr 1.2.1 H.G. Wells 1.2.2 Bronte   2 Análise de sentimentos   list.of.packages &lt;- c(&quot;tidyverse&quot;, &quot;gutenbergr&quot;, &quot;textdata&quot;) new.packages &lt;- list.of.packages[!(list.of.packages %in% installed.packages()[,&quot;Package&quot;])] if(length(new.packages)) install.packages(new.packages) Esse texto é totalmente baseado no livro disponível no livro gratuito Text Mining with R
+1 O formato tidy para texto Usando o princípio tidy para dados é muito útiol pois torna a manipulação de dados mais simples e efetivas, isso também serve para dados textuais, a estrutura tidy tem a seguinte estrutura:">
+
+
+<meta property="og:description" content="1 O formato tidy para texto 1.1 Obra de Jane Austen no formato Tidy 1.2 O pacote gutenbergr 1.2.1 H.G. Wells 1.2.2 Bronte   2 Análise de sentimentos   list.of.packages &lt;- c(&quot;tidyverse&quot;, &quot;gutenbergr&quot;, &quot;textdata&quot;) new.packages &lt;- list.of.packages[!(list.of.packages %in% installed.packages()[,&quot;Package&quot;])] if(length(new.packages)) install.packages(new.packages) Esse texto é totalmente baseado no livro disponível no livro gratuito Text Mining with R
+1 O formato tidy para texto Usando o princípio tidy para dados é muito útiol pois torna a manipulação de dados mais simples e efetivas, isso também serve para dados textuais, a estrutura tidy tem a seguinte estrutura:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mineração de Textos - Uma Abordagem Tidy">
+<meta name="twitter:title" content="Mineração de Textos - Uma Abordagem Tidy">
+<meta property="og:url" content="/2020/08/tidytext/">
+<meta property="twitter:url" content="/2020/08/tidytext/">
+<meta property="og:site_name" content="Douglas Braga">
+<meta property="og:description" content="1 O formato tidy para texto 1.1 Obra de Jane Austen no formato Tidy 1.2 O pacote gutenbergr 1.2.1 H.G. Wells 1.2.2 Bronte   2 Análise de sentimentos   list.of.packages &lt;- c(&quot;tidyverse&quot;, &quot;gutenbergr&quot;, &quot;textdata&quot;) new.packages &lt;- list.of.packages[!(list.of.packages %in% installed.packages()[,&quot;Package&quot;])] if(length(new.packages)) install.packages(new.packages) Esse texto é totalmente baseado no livro disponível no livro gratuito Text Mining with R
+1 O formato tidy para texto Usando o princípio tidy para dados é muito útiol pois torna a manipulação de dados mais simples e efetivas, isso também serve para dados textuais, a estrutura tidy tem a seguinte estrutura:">
+<meta name="twitter:description" content="1 O formato tidy para texto 1.1 Obra de Jane Austen no formato Tidy 1.2 O pacote gutenbergr 1.2.1 H.G. Wells 1.2.2 Bronte   2 Análise de sentimentos   list.of.packages &lt;- c(&quot;tidyverse&quot;, &quot;gutenbergr&quot;, &quot;textdata&quot;) new.packages &lt;- list.of.packages[!(list.of.packages %in% installed.packages()[,&quot;Package&quot;])] if(length(new.packages)) install.packages(new.packages) Esse texto é totalmente baseado no livro disponível no livro gratuito Text Mining with R
+1 O formato tidy para texto Usando o princípio tidy para dados é muito útiol pois torna a manipulação de dados mais simples e efetivas, isso também serve para dados textuais, a estrutura tidy tem a seguinte estrutura:">
+<meta property="og:locale" content="pt-br">
+
+  
+    <meta property="article:published_time" content="2020-08-08T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2020-08-08T00:00:00">
+  
+  
+  
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/c2c4f86b33c14ee5e3cbdcd169473d8a?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/c2c4f86b33c14ee5e3cbdcd169473d8a?s=640">
+
+
+    <title>Mineração de Textos - Uma Abordagem Tidy</title>
+
+    <link rel="icon" href="../../../favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="../../../2020/08/tidytext/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="../../../css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'Ua-93877401-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="5">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="../../../">Douglas Braga</a>
+  </div>
+  
+    
+      <a class="header-right-icon "
+         href="../../../#about">
+    
+    
+      <i class="fa fa-lg fa-https://media-exp1.licdn.com/dms/image/C4D03AQEHaQ5Kc2cAmw/profile-displayphoto-shrink_200_200/0?e=1602720000&amp;v=beta&amp;t=0aGp3jnZYShEYiaPYks-KGvp18nHw5Fl88xqw4uFGC4"></i>
+    
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="5">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="../../../#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/c2c4f86b33c14ee5e3cbdcd169473d8a?s=110" alt="Foto do autor" />
+        </a>
+        <h4 class="sidebar-profile-name">Douglas Braga</h4>
+        
+          <h5 class="sidebar-profile-bio">R, Python</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="../../../">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Início</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/douglas-martins-mendes-braga-904495b5/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/dobraga">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="5"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Mineração de Textos - Uma Abordagem Tidy
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-08-08T00:00:00Z">
+        
+  
+  
+  
+  
+    8 de Agosto de 2020
+  
+
+      </time>
+    
+    
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+
+<div id="TOC">
+<ul>
+<li><a href="#o-formato-tidy-para-texto"><span class="toc-section-number">1</span> O formato tidy para texto</a><ul>
+<li><a href="#obra-de-jane-austen-no-formato-tidy"><span class="toc-section-number">1.1</span> Obra de Jane Austen no formato Tidy</a></li>
+<li><a href="#o-pacote-gutenbergr"><span class="toc-section-number">1.2</span> O pacote gutenbergr</a><ul>
+<li><a href="#h.g.-wells"><span class="toc-section-number">1.2.1</span> H.G. Wells</a></li>
+<li><a href="#bronte"><span class="toc-section-number">1.2.2</span> Bronte</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#análise-de-sentimentos"><span class="toc-section-number">2</span> Análise de sentimentos</a></li>
+</ul>
+</div>
+
+<pre class="r"><code>list.of.packages &lt;- c(&quot;tidyverse&quot;, &quot;gutenbergr&quot;, &quot;textdata&quot;)
+new.packages &lt;- list.of.packages[!(list.of.packages %in% installed.packages()[,&quot;Package&quot;])]
+if(length(new.packages)) install.packages(new.packages)</code></pre>
+<p>Esse texto é totalmente baseado no livro disponível no livro gratuito
+<a href="https://www.tidytextmining.com/">Text Mining with R</a></p>
+<div id="o-formato-tidy-para-texto" class="section level1">
+<h1><span class="header-section-number">1</span> O formato tidy para texto</h1>
+<p>Usando o princípio tidy para dados é muito útiol pois torna a manipulação de
+dados mais simples e efetivas, isso também serve para dados textuais, a
+estrutura tidy tem a seguinte estrutura:</p>
+<ul>
+<li>Cada variável é uma coluna;</li>
+<li>Cada observação é uma linha;</li>
+<li>Cada variável deve possuir apenas um tipo.</li>
+</ul>
+<p>Sendo assim, é definido que o formato tidy para texto é uma tabela com um
+token por linha, o token é a unidade minima de análise, como por exemplo
+palavras, estamos interessados em utilizar para uma análisem e tokenização é o
+processo de separar o texto em tokens.</p>
+<pre class="r"><code>library(magrittr)
+knit_print.data.frame &lt;- knitr::kable
+
+text &lt;- c(&quot;Because I could not stop for Death -&quot;,
+          &quot;He kindly stopped for me -&quot;,
+          &quot;The Carriage held but just Ourselves -&quot;,
+          &quot;and Immortality&quot;)
+
+text</code></pre>
+<pre><code>## [1] &quot;Because I could not stop for Death -&quot;  
+## [2] &quot;He kindly stopped for me -&quot;            
+## [3] &quot;The Carriage held but just Ourselves -&quot;
+## [4] &quot;and Immortality&quot;</code></pre>
+<pre class="r"><code>text_df &lt;- tibble::tibble(line = 1:4, text = text)
+
+text_df</code></pre>
+<pre><code>## # A tibble: 4 x 2
+##    line text                                  
+##   &lt;int&gt; &lt;chr&gt;                                 
+## 1     1 Because I could not stop for Death -  
+## 2     2 He kindly stopped for me -            
+## 3     3 The Carriage held but just Ourselves -
+## 4     4 and Immortality</code></pre>
+<pre class="r"><code>library(tidytext)
+
+text_df %&gt;%
+  tidytext::unnest_tokens(
+    ., 
+    output = word, 
+    input = text, 
+    token = &quot;words&quot;
+  )</code></pre>
+<pre><code>## # A tibble: 20 x 2
+##     line word       
+##    &lt;int&gt; &lt;chr&gt;      
+##  1     1 because    
+##  2     1 i          
+##  3     1 could      
+##  4     1 not        
+##  5     1 stop       
+##  6     1 for        
+##  7     1 death      
+##  8     2 he         
+##  9     2 kindly     
+## 10     2 stopped    
+## 11     2 for        
+## 12     2 me         
+## 13     3 the        
+## 14     3 carriage   
+## 15     3 held       
+## 16     3 but        
+## 17     3 just       
+## 18     3 ourselves  
+## 19     4 and        
+## 20     4 immortality</code></pre>
+<div id="obra-de-jane-austen-no-formato-tidy" class="section level2">
+<h2><span class="header-section-number">1.1</span> Obra de Jane Austen no formato Tidy</h2>
+<pre class="r"><code>original_books &lt;- janeaustenr::austen_books() %&gt;% 
+  dplyr::group_by(book) %&gt;% 
+  dplyr::mutate(
+    rn = dplyr::row_number(),
+    chapter = stringr::str_detect(
+      text,
+      stringr::regex(&quot;^chapter [\\divxlc]&quot;, ignore_case = TRUE)
+    ) %&gt;% as.integer()
+  ) %&gt;% 
+  dplyr::ungroup()
+
+original_books</code></pre>
+<pre><code>## # A tibble: 73,422 x 4
+##    text                    book                   rn chapter
+##    &lt;chr&gt;                   &lt;fct&gt;               &lt;int&gt;   &lt;int&gt;
+##  1 &quot;SENSE AND SENSIBILITY&quot; Sense &amp; Sensibility     1       0
+##  2 &quot;&quot;                      Sense &amp; Sensibility     2       0
+##  3 &quot;by Jane Austen&quot;        Sense &amp; Sensibility     3       0
+##  4 &quot;&quot;                      Sense &amp; Sensibility     4       0
+##  5 &quot;(1811)&quot;                Sense &amp; Sensibility     5       0
+##  6 &quot;&quot;                      Sense &amp; Sensibility     6       0
+##  7 &quot;&quot;                      Sense &amp; Sensibility     7       0
+##  8 &quot;&quot;                      Sense &amp; Sensibility     8       0
+##  9 &quot;&quot;                      Sense &amp; Sensibility     9       0
+## 10 &quot;CHAPTER 1&quot;             Sense &amp; Sensibility    10       1
+## # … with 73,412 more rows</code></pre>
+<pre class="r"><code>tidy_books &lt;- original_books %&gt;% 
+  tidytext::unnest_tokens(word, text)
+
+tidy_books</code></pre>
+<pre><code>## # A tibble: 725,055 x 4
+##    book                   rn chapter word       
+##    &lt;fct&gt;               &lt;int&gt;   &lt;int&gt; &lt;chr&gt;      
+##  1 Sense &amp; Sensibility     1       0 sense      
+##  2 Sense &amp; Sensibility     1       0 and        
+##  3 Sense &amp; Sensibility     1       0 sensibility
+##  4 Sense &amp; Sensibility     3       0 by         
+##  5 Sense &amp; Sensibility     3       0 jane       
+##  6 Sense &amp; Sensibility     3       0 austen     
+##  7 Sense &amp; Sensibility     5       0 1811       
+##  8 Sense &amp; Sensibility    10       1 chapter    
+##  9 Sense &amp; Sensibility    10       1 1          
+## 10 Sense &amp; Sensibility    13       0 the        
+## # … with 725,045 more rows</code></pre>
+<pre class="r"><code>tidytext::stop_words</code></pre>
+<pre><code>## # A tibble: 1,149 x 2
+##    word        lexicon
+##    &lt;chr&gt;       &lt;chr&gt;  
+##  1 a           SMART  
+##  2 a&#39;s         SMART  
+##  3 able        SMART  
+##  4 about       SMART  
+##  5 above       SMART  
+##  6 according   SMART  
+##  7 accordingly SMART  
+##  8 across      SMART  
+##  9 actually    SMART  
+## 10 after       SMART  
+## # … with 1,139 more rows</code></pre>
+<pre class="r"><code>tidy_books %&lt;&gt;% 
+  dplyr::anti_join(tidytext::stop_words, by = c(&quot;word&quot; = &quot;word&quot;))
+
+tidy_books</code></pre>
+<pre><code>## # A tibble: 217,609 x 4
+##    book                   rn chapter word       
+##    &lt;fct&gt;               &lt;int&gt;   &lt;int&gt; &lt;chr&gt;      
+##  1 Sense &amp; Sensibility     1       0 sense      
+##  2 Sense &amp; Sensibility     1       0 sensibility
+##  3 Sense &amp; Sensibility     3       0 jane       
+##  4 Sense &amp; Sensibility     3       0 austen     
+##  5 Sense &amp; Sensibility     5       0 1811       
+##  6 Sense &amp; Sensibility    10       1 chapter    
+##  7 Sense &amp; Sensibility    10       1 1          
+##  8 Sense &amp; Sensibility    13       0 family     
+##  9 Sense &amp; Sensibility    13       0 dashwood   
+## 10 Sense &amp; Sensibility    13       0 settled    
+## # … with 217,599 more rows</code></pre>
+<pre class="r"><code>tidy_books %&gt;% 
+  dplyr::count(word, sort=T) %&gt;% 
+  dplyr::filter(n &gt; 600) %&gt;% 
+  dplyr::mutate(word = reorder(word, n)) %&gt;% 
+  ggplot2::ggplot(ggplot2::aes(word, n)) + 
+  ggplot2::geom_col() + 
+  ggplot2::coord_flip()</code></pre>
+<p><img src="../../../post/2020-08-08-tidytext_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="o-pacote-gutenbergr" class="section level2">
+<h2><span class="header-section-number">1.2</span> O pacote gutenbergr</h2>
+<p>O <strong>projeto Gutenberg</strong> é uma biblioteca com mais de 60.000 ebooks gratuitos.</p>
+<div id="h.g.-wells" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> H.G. Wells</h3>
+<pre class="r"><code>hgwells &lt;- gutenbergr::gutenberg_download(c(35, 36, 5230, 159))</code></pre>
+<pre><code>## Determining mirror for Project Gutenberg from http://www.gutenberg.org/robot/harvest</code></pre>
+<pre><code>## Using mirror http://aleph.gutenberg.org</code></pre>
+<pre class="r"><code>tidy_hgwells &lt;- hgwells %&gt;%
+  tidytext::unnest_tokens(word, text) %&gt;%
+  dplyr::anti_join(stop_words)</code></pre>
+<pre><code>## Joining, by = &quot;word&quot;</code></pre>
+<pre class="r"><code>tidy_hgwells %&gt;%
+  dplyr::count(word, sort = TRUE) %&gt;% 
+  dplyr::filter(n &gt; 150) %&gt;% 
+  dplyr::mutate(word = reorder(word, n)) %&gt;% 
+  ggplot2::ggplot(ggplot2::aes(word, n)) + 
+  ggplot2::geom_col() + 
+  ggplot2::coord_flip()</code></pre>
+<p><img src="../../../post/2020-08-08-tidytext_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="bronte" class="section level3">
+<h3><span class="header-section-number">1.2.2</span> Bronte</h3>
+<pre class="r"><code>bronte &lt;- gutenbergr::gutenberg_download(c(1260, 768, 969, 9182, 767))
+
+tidy_bronte &lt;- bronte %&gt;%
+  tidytext::unnest_tokens(word, text) %&gt;%
+  dplyr::anti_join(stop_words)</code></pre>
+<pre><code>## Joining, by = &quot;word&quot;</code></pre>
+<pre class="r"><code>tidy_bronte %&gt;%
+  dplyr::count(word, sort = TRUE) %&gt;% 
+  dplyr::filter(n &gt; 500) %&gt;% 
+  dplyr::mutate(word = reorder(word, n)) %&gt;% 
+  ggplot2::ggplot(ggplot2::aes(word, n)) + 
+  ggplot2::geom_col() + 
+  ggplot2::coord_flip()</code></pre>
+<p><img src="../../../post/2020-08-08-tidytext_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<pre class="r"><code>frequency &lt;- dplyr::bind_rows(
+  dplyr::mutate(tidy_bronte, author = &quot;Brontë Sisters&quot;),
+  dplyr::mutate(tidy_hgwells, author = &quot;H.G. Wells&quot;),
+  dplyr::mutate(tidy_books, author = &quot;Jane Austen&quot;)
+) %&gt;% 
+  dplyr::mutate(word = stringr::str_extract(word, &quot;[a-z&#39;]+&quot;)) %&gt;% 
+  dplyr::count(author, word) %&gt;% 
+  dplyr::mutate(prop = n/sum(n)) %&gt;% 
+  dplyr::select(-n) %&gt;% 
+  tidyr::spread(author, prop) %&gt;% 
+  tidyr::gather(author, proportion, `Brontë Sisters`:`H.G. Wells`)</code></pre>
+<pre class="r"><code>ggplot2::ggplot(
+  frequency, 
+  ggplot2::aes(
+    x = proportion, 
+    y = `Jane Austen`, 
+    color = abs(`Jane Austen` - proportion)
+  )
+) +
+  ggplot2::geom_abline(color = &quot;gray40&quot;, lty = 2) +
+  ggplot2::geom_jitter(alpha = 0.1, size = 2.5, width = 0.3, height = 0.3) +
+  ggplot2::geom_text(
+    ggplot2::aes(label = word), check_overlap = TRUE, vjust = 1.5
+  ) + 
+  ggplot2::scale_x_log10(labels = scales::percent_format()) +
+  ggplot2::scale_y_log10(labels = scales::percent_format()) +
+  ggplot2::scale_color_gradient(
+    limits = c(0, 0.001), low = &quot;darkslategray4&quot;, high = &quot;gray75&quot;
+  ) +
+  ggplot2::facet_wrap(~author, ncol = 2) +
+  ggplot2::theme(legend.position=&quot;none&quot;) +
+  ggplot2::labs(y = &quot;Jane Austen&quot;, x = NULL)</code></pre>
+<pre><code>## Warning: Removed 41357 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 41359 rows containing missing values (geom_text).</code></pre>
+<p><img src="../../../post/2020-08-08-tidytext_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre class="r"><code>cor.test(
+  data = frequency[frequency$author == &quot;Brontë Sisters&quot;,],
+  ~ proportion + `Jane Austen`
+)</code></pre>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  proportion and Jane Austen
+## t = 119.65, df = 10404, p-value &lt; 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.7527869 0.7689642
+## sample estimates:
+##       cor 
+## 0.7609938</code></pre>
+<pre class="r"><code>cor.test(
+  data = frequency[frequency$author == &quot;H.G. Wells&quot;,], 
+  ~ proportion + `Jane Austen`
+)</code></pre>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  proportion and Jane Austen
+## t = 36.441, df = 6053, p-value &lt; 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.4032800 0.4445987
+## sample estimates:
+##       cor 
+## 0.4241601</code></pre>
+</div>
+</div>
+</div>
+<div id="análise-de-sentimentos" class="section level1">
+<h1><span class="header-section-number">2</span> Análise de sentimentos</h1>
+<pre class="r"><code>tidytext::get_sentiments(&quot;afinn&quot;)</code></pre>
+<pre><code>## # A tibble: 2,477 x 2
+##    word       value
+##    &lt;chr&gt;      &lt;dbl&gt;
+##  1 abandon       -2
+##  2 abandoned     -2
+##  3 abandons      -2
+##  4 abducted      -2
+##  5 abduction     -2
+##  6 abductions    -2
+##  7 abhor         -3
+##  8 abhorred      -3
+##  9 abhorrent     -3
+## 10 abhors        -3
+## # … with 2,467 more rows</code></pre>
+<pre class="r"><code>get_sentiments(&quot;bing&quot;)</code></pre>
+<pre><code>## # A tibble: 6,786 x 2
+##    word        sentiment
+##    &lt;chr&gt;       &lt;chr&gt;    
+##  1 2-faces     negative 
+##  2 abnormal    negative 
+##  3 abolish     negative 
+##  4 abominable  negative 
+##  5 abominably  negative 
+##  6 abominate   negative 
+##  7 abomination negative 
+##  8 abort       negative 
+##  9 aborted     negative 
+## 10 aborts      negative 
+## # … with 6,776 more rows</code></pre>
+<pre class="r"><code>get_sentiments(&quot;nrc&quot;)</code></pre>
+<pre><code>## # A tibble: 13,901 x 2
+##    word        sentiment
+##    &lt;chr&gt;       &lt;chr&gt;    
+##  1 abacus      trust    
+##  2 abandon     fear     
+##  3 abandon     negative 
+##  4 abandon     sadness  
+##  5 abandoned   anger    
+##  6 abandoned   fear     
+##  7 abandoned   negative 
+##  8 abandoned   sadness  
+##  9 abandonment anger    
+## 10 abandonment fear     
+## # … with 13,891 more rows</code></pre>
+<pre class="r"><code>tidy_books</code></pre>
+<pre><code>## # A tibble: 217,609 x 4
+##    book                   rn chapter word       
+##    &lt;fct&gt;               &lt;int&gt;   &lt;int&gt; &lt;chr&gt;      
+##  1 Sense &amp; Sensibility     1       0 sense      
+##  2 Sense &amp; Sensibility     1       0 sensibility
+##  3 Sense &amp; Sensibility     3       0 jane       
+##  4 Sense &amp; Sensibility     3       0 austen     
+##  5 Sense &amp; Sensibility     5       0 1811       
+##  6 Sense &amp; Sensibility    10       1 chapter    
+##  7 Sense &amp; Sensibility    10       1 1          
+##  8 Sense &amp; Sensibility    13       0 family     
+##  9 Sense &amp; Sensibility    13       0 dashwood   
+## 10 Sense &amp; Sensibility    13       0 settled    
+## # … with 217,599 more rows</code></pre>
+<pre class="r"><code>nrc_joy &lt;- tidytext::get_sentiments(&quot;nrc&quot;) %&gt;% 
+  dplyr::filter(sentiment == &quot;joy&quot;)</code></pre>
+<pre class="r"><code>tidy_books %&gt;% 
+  dplyr::filter(book==&quot;Emma&quot;) %&gt;% 
+  dplyr::inner_join(nrc_joy) %&gt;% 
+  dplyr::count(word, sort=T)</code></pre>
+<pre><code>## Joining, by = &quot;word&quot;</code></pre>
+<pre><code>## # A tibble: 298 x 2
+##    word          n
+##    &lt;chr&gt;     &lt;int&gt;
+##  1 friend      166
+##  2 hope        143
+##  3 happy       125
+##  4 love        117
+##  5 deal         92
+##  6 found        92
+##  7 happiness    76
+##  8 pretty       68
+##  9 true         66
+## 10 comfort      65
+## # … with 288 more rows</code></pre>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">PRÓXIMO</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">ANTERIOR</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Douglas Braga. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">PRÓXIMO</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">ANTERIOR</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/c2c4f86b33c14ee5e3cbdcd169473d8a?s=110" alt="Foto do autor" />
+    
+    <h4 id="about-card-name">Douglas Braga</h4>
+    
+      <div id="about-card-bio">R, Python</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Integration Analyst @ Accenture
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Rio de Janeiro - Brasil
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/6/68/Solid_black.png');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="../../../js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+
+  
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+
