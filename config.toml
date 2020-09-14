@@ -1,43 +1,73 @@
 baseurl = "/"
 languageCode = "pt-br"
+defaultContentLanguage = "pt"
 title = "dobraga"
-theme = "hugo-lithium"
+theme = "hermit"
 googleAnalytics = "Ua-93877401-1"
-disqusShortname = ""
+# enableGitInfo = true
+pygmentsCodefences  = true
+pygmentsUseClasses  = true
+# hasCJKLanguage = true  # If Chinese/Japanese/Korean is your main content language, enable this to make wordCount works right.
+rssLimit = 10  # Maximum number of items in the RSS feed.
+#copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License." # This message is only used by the RSS template.
+enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
+# googleAnalytics = "UA-123-45"
+# disqusShortname = "yourdiscussshortname"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
-[permalinks]
-    post = "/:year/:month/:day/:slug/"
+[author]
+  name = "Douglas Braga"
 
-[[menu.main]]
-    name = "Sobre"
-    url = "/about/"
-[[menu.main]]
-    name = "GitHub"
-    url = "https://github.com/dobraga"
-[[menu.main]]
-    name = "Linkedin"
-    url = "https://www.linkedin.com/in/douglas-martins-mendes-braga-904495b5/"
+[taxonomies]
+  tag = "tags"
+  # Categories are disabled by default.
 
 [params]
-    description = "A website built through Hugo and blogdown."
+  dateform        = "2 de Jan de 2006"
+  dateformShort   = "2 Jan"
+  dateformNum     = "2006-01-02"
+  dateformNumTime = "2006-01-02 15:04 -0700"
 
-    # options for highlight.js (version, additional languages, and theme)
-    highlightjsVersion = "9.12.0"
-    highlightjsCDN = "//cdnjs.cloudflare.com/ajax/libs"
-    highlightjsLang = ["r", "yaml", "python"]
-    highlightjsTheme = "github"
+  # Metadata mostly used in document's head
+  # description = ""
+  # images = [""]
+  themeColor = "#494f5c"
 
-    MathJaxCDN = "//cdnjs.cloudflare.com/ajax/libs"
-    MathJaxVersion = "2.7.5"
+  #homeSubtitle = "A minimal and fast theme for Hugo."
+  # footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
+  # bgImg = ""  # Homepage background-image URL
 
-    # path to the favicon, under "static"
-    # https://www.iconfinder.com/iconsets/artificial-intelligence-6
-    favicon = "iconfinder_ArtificialIntelligence25_2890583.png"
+  # Prefix of link to the git commit detail page. GitInfo must be enabled.
+  # gitUrl = "https://github.com/username/repository/commit/"
 
-    [params.logo]
-    url = "iconfinder_ArtificialIntelligence25_2890583.png"
+  # Toggling this option needs to rebuild SCSS, requires Hugo extended version
+  justifyContent = true  # Set "text-align: justify" to `.content`.
+
+  relatedPosts = false  # Add a related content section to all single posts page
+
+  code_copy_button = true # Turn on/off the code-copy-button for code-fields
+
+  [[params.social]]
+    name = "github"
+    url = "https://https://github.com/dobraga"
     
-    width = 50
-    height = 50
-    alt = "Logo"
+  [[params.social]]
+    name = "linkedin"
+    url = "https://www.linkedin.com/in/douglas-martins-mendes-braga-904495b5/"
+    
+  [[params.social]]
+    name = "email"
+    url = "douglasmartinsbraga@gmail.com"  
+
+[menu]
+
+  [[menu.main]]
+    name = "Posts"
+    url = "post/"
+    weight = 10
+
+  [[menu.main]]
+    name = "Sobre"
+    url = "about/"
+    weight = 20
+    

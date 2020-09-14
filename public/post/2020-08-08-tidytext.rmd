@@ -14,12 +14,7 @@ output:
     max.print: 20
 ---
 
-<style>
-body {
-text-align: justify}
-</style>
-
-Com isso, serão instalados os pacotes que serão utilizados.
+Primeiramente serão instalados os pacotes que serão utilizados.
 
 ```{r warning=F, message=F}
 list.of.packages <- c(

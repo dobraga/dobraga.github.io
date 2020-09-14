@@ -1,78 +1,78 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Hugo 0.74.3" />
 
-
-<title>Mineração de Textos - Uma Abordagem Tidy - dobraga</title>
-<meta property="og:title" content="Mineração de Textos - Uma Abordagem Tidy - dobraga">
-
-
-  <link href='/iconfinder_ArtificialIntelligence25_2890583.png' rel='icon' type='image/x-icon'/>
-
-
-
-  
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta itemprop="name" content="Mineração de Textos - Uma Abordagem Tidy">
+<meta itemprop="description" content="1 O formato tidy para texto 1.1 A diferença entre o formato tidy e os demais 1.2 A função unnest_tokens 1.3 Obra de Jane Austen no formato Tidy 1.4 O pacote gutenbergr 1.4.1 H.G. Wells 1.4.2 Bronte      body { text-align: justify}  Com isso, serão instalados os pacotes que serão utilizados.
+list.of.packages &lt;- c( &quot;tidyverse&quot;, &quot;gutenbergr&quot;, &quot;textdata&quot; ) is.instaled &lt;- list.of.packages %in% installed.">
+<meta itemprop="datePublished" content="2020-08-08T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-08-08T00:00:00+00:00" />
+<meta itemprop="wordCount" content="2638">
 
 
 
+<meta itemprop="keywords" content="Mineração de Dados,Texto,Tidy,R," />
+<meta property="og:title" content="Mineração de Textos - Uma Abordagem Tidy" />
+<meta property="og:description" content="1 O formato tidy para texto 1.1 A diferença entre o formato tidy e os demais 1.2 A função unnest_tokens 1.3 Obra de Jane Austen no formato Tidy 1.4 O pacote gutenbergr 1.4.1 H.G. Wells 1.4.2 Bronte      body { text-align: justify}  Com isso, serão instalados os pacotes que serão utilizados.
+list.of.packages &lt;- c( &quot;tidyverse&quot;, &quot;gutenbergr&quot;, &quot;textdata&quot; ) is.instaled &lt;- list.of.packages %in% installed." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/2020/08/08/tidytext/" />
+<meta property="article:published_time" content="2020-08-08T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-08-08T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Mineração de Textos - Uma Abordagem Tidy"/>
+<meta name="twitter:description" content="1 O formato tidy para texto 1.1 A diferença entre o formato tidy e os demais 1.2 A função unnest_tokens 1.3 Obra de Jane Austen no formato Tidy 1.4 O pacote gutenbergr 1.4.1 H.G. Wells 1.4.2 Bronte      body { text-align: justify}  Com isso, serão instalados os pacotes que serão utilizados.
+list.of.packages &lt;- c( &quot;tidyverse&quot;, &quot;gutenbergr&quot;, &quot;textdata&quot; ) is.instaled &lt;- list.of.packages %in% installed."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Mineração de Textos - Uma Abordagem Tidy</title>
+	<link rel="stylesheet" href="/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="/">dobraga</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://github.com/dobraga">GitHub</a>
+				<a href="https://www.linkedin.com/in/douglas-martins-mendes-braga-904495b5/">Linkedin</a>
+				<a href="/about/">Sobre</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://github.com/dobraga">GitHub</a></li>
+			<li><a href="https://www.linkedin.com/in/douglas-martins-mendes-braga-904495b5/">Linkedin</a></li>
+			<li><a href="/about/">Sobre</a></li>
+		</ul>
+	</div>
 
 
-
-
-
-<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
-
-
-
-<link rel="stylesheet" href="/css/fonts.css" media="all">
-<link rel="stylesheet" href="/css/main.css" media="all">
-
-
-
-  </head>
-  <body>
-    <div class="wrapper">
-      <header class="header">
-        <nav class="nav">
-  <a href="/" class="nav-logo">
-    <img src="/images/iconfinder_ArtificialIntelligence25_2890583.png"
-         width="50"
-         height="50"
-         alt="Logo">
-  </a>
-
-  <ul class="nav-links">
-    
-    <li><a href="https://github.com/dobraga">GitHub</a></li>
-    
-    <li><a href="https://www.linkedin.com/in/douglas-martins-mendes-braga-904495b5/">Linkedin</a></li>
-    
-    <li><a href="/about/">Sobre</a></li>
-    
-  </ul>
-</nav>
-
-      </header>
-
-
-<main class="content" role="main">
-
-  <article class="article">
-    
-    <span class="article-duration">13 min read</span>
-    
-
-    <h1 class="article-title">Mineração de Textos - Uma Abordagem Tidy</h1>
-
-    
-    <span class="article-date">2020-08-08</span>
-    
-
-    <div class="article-content">
-      
+	<main class="site-main section-inner thin animated fadeIn faster">
+		<h1>Mineração de Textos - Uma Abordagem Tidy</h1>
+		<div class="content">
+			
 <link href="/rmarkdown-libs/pagedtable/css/pagedtable.css" rel="stylesheet" />
 <script src="/rmarkdown-libs/pagedtable/js/pagedtable.js"></script>
 
@@ -418,60 +418,32 @@ por autores, com base na autora Jane Austen.</p>
 </div>
 </div>
 
-    </div>
-  </article>
+		</div>
+	</main>
 
-  
-
-
-</main>
-
-      <footer class="footer">
-        <ul class="footer-links">
-          <li>
-            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
-          </li>
-          <li>
-            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
-          </li>
-        </ul>
-      </footer>
-
-    </div>
-    
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="/"></a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
 
 
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-
-
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
-<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
-
-
-
-    
-<script src="/js/math-code.js"></script>
-<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
-
-    
+	<script src="/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 	ga('create', 'Ua-93877401-1', 'auto');
 	
 	ga('send', 'pageview');
 }
 </script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
-  </body>
+
+</body>
+
 </html>
-
