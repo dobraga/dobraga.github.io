@@ -49,15 +49,15 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
   [[params.social]]
     name = "github"
-    url = "https://https://github.com/dobraga"
+    url = "https://github.com/dobraga"
     
   [[params.social]]
     name = "linkedin"
-    url = "https://www.linkedin.com/in/douglas-martins-mendes-braga-904495b5/"
+    url = "https://www.linkedin.com/in/douglas-braga-904495b5/"
     
   [[params.social]]
     name = "email"
-    url = "douglasmartinsbraga@gmail.com"  
+    url = "mailto:douglasmartinsbraga@gmail.com"  
 
 [menu]
 

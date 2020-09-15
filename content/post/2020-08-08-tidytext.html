@@ -142,7 +142,7 @@ controle do formato original e um para o capítulo.</p>
   ) %&gt;% 
   ungroup()
 
-original_books %&gt;% head(20)</code></pre>
+head(original_books, 20)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["text"],"name":[1],"type":["chr"],"align":["left"]},{"label":["book"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["rn"],"name":[3],"type":["int"],"align":["right"]},{"label":["chapter"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"SENSE AND SENSIBILITY","2":"Sense & Sensibility","3":"1","4":"0"},{"1":"","2":"Sense & Sensibility","3":"2","4":"0"},{"1":"by Jane Austen","2":"Sense & Sensibility","3":"3","4":"0"},{"1":"","2":"Sense & Sensibility","3":"4","4":"0"},{"1":"(1811)","2":"Sense & Sensibility","3":"5","4":"0"},{"1":"","2":"Sense & Sensibility","3":"6","4":"0"},{"1":"","2":"Sense & Sensibility","3":"7","4":"0"},{"1":"","2":"Sense & Sensibility","3":"8","4":"0"},{"1":"","2":"Sense & Sensibility","3":"9","4":"0"},{"1":"CHAPTER 1","2":"Sense & Sensibility","3":"10","4":"1"},{"1":"","2":"Sense & Sensibility","3":"11","4":"0"},{"1":"","2":"Sense & Sensibility","3":"12","4":"0"},{"1":"The family of Dashwood had long been settled in Sussex.  Their estate","2":"Sense & Sensibility","3":"13","4":"0"},{"1":"was large, and their residence was at Norland Park, in the centre of","2":"Sense & Sensibility","3":"14","4":"0"},{"1":"their property, where, for many generations, they had lived in so","2":"Sense & Sensibility","3":"15","4":"0"},{"1":"respectable a manner as to engage the general good opinion of their","2":"Sense & Sensibility","3":"16","4":"0"},{"1":"surrounding acquaintance.  The late owner of this estate was a single","2":"Sense & Sensibility","3":"17","4":"0"},{"1":"man, who lived to a very advanced age, and who for many years of his","2":"Sense & Sensibility","3":"18","4":"0"},{"1":"life, had a constant companion and housekeeper in his sister.  But her","2":"Sense & Sensibility","3":"19","4":"0"},{"1":"death, which happened ten years before his own, produced a great","2":"Sense & Sensibility","3":"20","4":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -152,13 +152,13 @@ original_books %&gt;% head(20)</code></pre>
 <pre class="r"><code>tidy_books &lt;- original_books %&gt;% 
   tidytext::unnest_tokens(word, text)
 
-tidy_books %&gt;% head(20)</code></pre>
+head(tidy_books, 20)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["book"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["rn"],"name":[2],"type":["int"],"align":["right"]},{"label":["chapter"],"name":[3],"type":["int"],"align":["right"]},{"label":["word"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"Sense & Sensibility","2":"1","3":"0","4":"sense"},{"1":"Sense & Sensibility","2":"1","3":"0","4":"and"},{"1":"Sense & Sensibility","2":"1","3":"0","4":"sensibility"},{"1":"Sense & Sensibility","2":"3","3":"0","4":"by"},{"1":"Sense & Sensibility","2":"3","3":"0","4":"jane"},{"1":"Sense & Sensibility","2":"3","3":"0","4":"austen"},{"1":"Sense & Sensibility","2":"5","3":"0","4":"1811"},{"1":"Sense & Sensibility","2":"10","3":"1","4":"chapter"},{"1":"Sense & Sensibility","2":"10","3":"1","4":"1"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"the"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"family"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"of"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"dashwood"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"had"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"long"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"been"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"settled"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"in"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"sussex"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"their"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<pre class="r"><code>tidytext::stop_words %&gt;% head(20)</code></pre>
+<pre class="r"><code>head(tidytext::stop_words,20)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["word"],"name":[1],"type":["chr"],"align":["left"]},{"label":["lexicon"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"a","2":"SMART"},{"1":"a's","2":"SMART"},{"1":"able","2":"SMART"},{"1":"about","2":"SMART"},{"1":"above","2":"SMART"},{"1":"according","2":"SMART"},{"1":"accordingly","2":"SMART"},{"1":"across","2":"SMART"},{"1":"actually","2":"SMART"},{"1":"after","2":"SMART"},{"1":"afterwards","2":"SMART"},{"1":"again","2":"SMART"},{"1":"against","2":"SMART"},{"1":"ain't","2":"SMART"},{"1":"all","2":"SMART"},{"1":"allow","2":"SMART"},{"1":"allows","2":"SMART"},{"1":"almost","2":"SMART"},{"1":"alone","2":"SMART"},{"1":"along","2":"SMART"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -172,7 +172,7 @@ análise.</p>
     by = c(&quot;word&quot; = &quot;word&quot;)
   )
 
-tidy_books %&gt;% head(20)</code></pre>
+head(tidy_books, 20)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["book"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["rn"],"name":[2],"type":["int"],"align":["right"]},{"label":["chapter"],"name":[3],"type":["int"],"align":["right"]},{"label":["word"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"Sense & Sensibility","2":"1","3":"0","4":"sense"},{"1":"Sense & Sensibility","2":"1","3":"0","4":"sensibility"},{"1":"Sense & Sensibility","2":"3","3":"0","4":"jane"},{"1":"Sense & Sensibility","2":"3","3":"0","4":"austen"},{"1":"Sense & Sensibility","2":"5","3":"0","4":"1811"},{"1":"Sense & Sensibility","2":"10","3":"1","4":"chapter"},{"1":"Sense & Sensibility","2":"10","3":"1","4":"1"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"family"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"dashwood"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"settled"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"sussex"},{"1":"Sense & Sensibility","2":"13","3":"0","4":"estate"},{"1":"Sense & Sensibility","2":"14","3":"0","4":"residence"},{"1":"Sense & Sensibility","2":"14","3":"0","4":"norland"},{"1":"Sense & Sensibility","2":"14","3":"0","4":"park"},{"1":"Sense & Sensibility","2":"14","3":"0","4":"centre"},{"1":"Sense & Sensibility","2":"15","3":"0","4":"property"},{"1":"Sense & Sensibility","2":"15","3":"0","4":"generations"},{"1":"Sense & Sensibility","2":"15","3":"0","4":"lived"},{"1":"Sense & Sensibility","2":"16","3":"0","4":"respectable"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -214,7 +214,7 @@ tidy_hgwells &lt;- hgwells %&gt;%
   tidytext::unnest_tokens(word, text) %&gt;%
   anti_join(tidytext::stop_words)
 
-tidy_hgwells %&gt;% head(20)</code></pre>
+head(tidy_hgwells, 20)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["gutenberg_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["word"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"35","2":"time"},{"1":"35","2":"machine"},{"1":"35","2":"1898"},{"1":"35","2":"time"},{"1":"35","2":"traveller"},{"1":"35","2":"convenient"},{"1":"35","2":"speak"},{"1":"35","2":"expounding"},{"1":"35","2":"recondite"},{"1":"35","2":"matter"},{"1":"35","2":"grey"},{"1":"35","2":"eyes"},{"1":"35","2":"shone"},{"1":"35","2":"twinkled"},{"1":"35","2":"pale"},{"1":"35","2":"flushed"},{"1":"35","2":"animated"},{"1":"35","2":"fire"},{"1":"35","2":"burned"},{"1":"35","2":"brightly"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}

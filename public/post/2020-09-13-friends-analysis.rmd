@@ -126,7 +126,7 @@ Como isso podemos pegar a informação detalhada de cada episódio, como, por
 exemplo, as informações detalhadas do primeiro episódio:
 
 ```{r}
-pega_info_ep("https://www.imdb.com/title/tt0583459/?ref_=ttep_ep1")
+t(pega_info_ep("https://www.imdb.com/title/tt0583459/?ref_=ttep_ep1"))
 ```
 
 Como temos mais de 200 linhas (episódios) seria muito demorado fazer a busca 
