@@ -4,60 +4,67 @@ defaultContentLanguage = "pt"
 title = "dobraga"
 theme = "hugo-coder"
 googleAnalytics = "Ua-93877401-1"
-# enableGitInfo = true
-pygmentsCodefences  = true
-pygmentsUseClasses  = true
-# hasCJKLanguage = true  # If Chinese/Japanese/Korean is your main content language, enable this to make wordCount works right.
-rssLimit = 10  # Maximum number of items in the RSS feed.
-#copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License." # This message is only used by the RSS template.
-enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
-# googleAnalytics = "UA-123-45"
-# disqusShortname = "yourdiscussshortname"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
-[author]
-  name = "Douglas Braga"
-
-[taxonomies]
-  tag = "tags"
-  # Categories are disabled by default.
+canonifyurls = true
+pygmentsstyle = "bw"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
 
 [params]
-  dateform        = "2 de Jan de 2006"
-  dateformShort   = "2 Jan"
-  dateformNum     = "2006-01-02"
-  dateformNumTime = "2006-01-02 15:04 -0700"
+    author = "Douglas Braga"
+    description = "John Doe's personal website"
+    # keywords = "blog,developer,personal"
+    # info = "Full Stack DevOps and Magician"
 
-  # Metadata mostly used in document's head
-  # description = ""
-  # images = [""]
-  # themeColor = "#494f5c"
+    dateform        = "2 de Jan de 2006"
+    dateformShort   = "2 Jan"
+    dateformNum     = "2006-01-02"
+    dateformNumTime = "2006-01-02 15:04 -0700"
 
-  #homeSubtitle = "A minimal and fast theme for Hugo."
-  # footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
-  # bgImg = ""  # Homepage background-image URL
+    hideFooter = false
+    hideCredits = false
+    hideCopyright = false
+    since = 2020
 
-  # Prefix of link to the git commit detail page. GitInfo must be enabled.
-  # gitUrl = "https://github.com/username/repository/commit/"
+    rtl = false
 
-  # Toggling this option needs to rebuild SCSS, requires Hugo extended version
-  justifyContent = true  # Set "text-align: justify" to `.content`.
+    # Specify light/dark colorscheme
+    # Supported values:
+    # "auto" (use preference set by browser)
+    # "dark" (dark background, light foreground)
+    # "light" (light background, dark foreground) (default)
+    colorscheme = "auto"
 
-  relatedPosts = false  # Add a related content section to all single posts page
+    # Series see also post count
+    maxSeeAlsoItems = 5
 
-  code_copy_button = true # Turn on/off the code-copy-button for code-fields
+    # Enable Twemoji
+    enableTwemoji = true
 
-  [[params.social]]
-    name = "github"
-    url = "https://github.com/dobraga"
-    
-  [[params.social]]
-    name = "linkedin"
-    url = "https://www.linkedin.com/in/douglas-braga-904495b5/"
-    
-  [[params.social]]
-    name = "email"
-    url = "mailto:douglasmartinsbraga@gmail.com"  
+    # Custom CSS
+    custom_css = []
+
+    # Custom JS
+    custom_js = []
+      
+    justifyContent = true 
+    relatedPosts = true
+    code_copy_button = true # Turn on/off the code-copy-button for code-fields
+  
+    avatarurl = "https://media-exp1.licdn.com/dms/image/C4D03AQEHaQ5Kc2cAmw/profile-displayphoto-shrink_200_200/0?e=1606348800&v=beta&t=A3zjN2TM3F_8aLSYbGWaeINApmIFdX6Xh2ok9Tp_ftE"
+  
+    [[params.social]]
+      name = "github"
+      url = "https://github.com/dobraga"
+      
+    [[params.social]]
+      name = "linkedin"
+      url = "https://www.linkedin.com/in/douglas-braga-904495b5/"
+      
+    [[params.social]]
+      name = "email"
+      url = "mailto:douglasmartinsbraga@gmail.com"  
 
 [menu]
 
@@ -70,4 +77,5 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     name = "Sobre"
     url = "about/"
     weight = 20
+    
     
