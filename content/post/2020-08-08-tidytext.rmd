@@ -18,7 +18,7 @@ Primeiramente serão instalados os pacotes que serão utilizados.
 
 ```{r warning=F, message=F}
 list.of.packages <- c(
-  "tidyverse", "gutenbergr", "textdata"
+  "tidyverse", "gutenbergr", "tidytext"
 )
 
 is.instaled <- list.of.packages %in% installed.packages()
