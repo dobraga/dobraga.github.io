@@ -1,0 +1,14 @@
+---
+title: "Aprendizagem por reforço"
+author: ~
+date: '2020-09-23'
+draft: true
+comments: false
+images:
+---
+
+<!-- http://incompleteideas.net/book/RLbook2018.pdf -->
+
+# Introdução
+
+
