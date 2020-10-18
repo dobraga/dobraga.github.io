@@ -42,6 +42,8 @@ nomeações. Em 2002, a revista especializada em televisão TV Guide lançou uma
 lista com os 50 melhores programas de televisão de todos os tempos, e Friends 
 constava em 21º lugar."
 
+# Web Scraping
+
 Para essa análise será utilizada a base do IMDB, onde temos diversas informações
 de cada episódio da série. Primeiro vamos buscar as informações gerais do 
 episódio.
@@ -55,7 +57,10 @@ pega_lista_ep <- function(season=1){
   page <- httr::GET(url) %>% 
     xml2::read_html()
   
-  tag <- xml2::xml_find_all(page, '//*[@id="episodes_content"]/div[2]/div[2]/div/div[2]/strong/a')
+  tag <- xml2::xml_find_all(
+    page, 
+    '//*[@id="episodes_content"]/div[2]/div[2]/div/div[2]/strong/a'
+  )
   
   tibble(
     ep_name = xml2::xml_attr(tag, "title"),
@@ -67,7 +72,8 @@ pega_lista_ep <- function(season=1){
 head(pega_lista_ep(1), 10)
 ```
 
-Agora buscando as informações de todas as temporadas, temos:
+Agora buscando as informações de todas as temporadas e numerando os episódios, 
+temos:
 
 ```{r}
 df <-  purrr::map_df(1:10, pega_lista_ep) %>% 
@@ -107,7 +113,9 @@ pega_info_ep <- function(url){
       xml2::xml_attr("href")
   ) %>% httr::GET(.) %>% 
     xml2::read_html() %>% 
-    xml2::xml_find_all('//*[@id="plot-summaries-content" or @id="plot-synopsis-content"]/li') %>% 
+    xml2::xml_find_all(
+      '//*[@id="plot-summaries-content" or @id="plot-synopsis-content"]/li'
+    ) %>% 
     xml2::xml_text()
   
   arg <- which.max(purrr::map_dbl(summarys, str_length))
@@ -129,10 +137,9 @@ exemplo, as informações detalhadas do primeiro episódio:
 t(pega_info_ep("https://www.imdb.com/title/tt0583459/?ref_=ttep_ep1"))
 ```
 
-Como temos mais de 200 linhas (episódios) seria muito demorado fazer a busca 
-sequencialmente dessas informações, por isso, será feita uma busca em paralelo, 
-para efeito de comparação a busca de 10 episódios sequencialmente demora por 
-volta de:
+Como temos mais de 200 episódios para buscar as informações seria muito demorado 
+fazer a busca sequencialmente, por isso, será feita uma busca em paralelo, para 
+efeito de comparação a busca de 10 episódios sequencialmente demora por volta de:
 
 ```{r}
 tictoc::tic()
@@ -151,7 +158,7 @@ x <- furrr::future_map_dfr(df$url[1:10], pega_info_ep)
 tictoc::toc()
 ```
 
-Uma queda considerável no tempo de execução, agora buscando a inormações de 
+Uma queda considerável no tempo de execução, agora buscando a informações de 
 todos os episódios:
 
 ```{r}
@@ -167,7 +174,9 @@ df <- df %>% left_join(df_ep, by="url")
 head(df, 10)
 ```
 
+# Análises
 
+## Série Temporal
 
 ```{r}
 df %>% 
@@ -189,6 +198,8 @@ df %>%
   geom_point(aes(x = nu_ep, y = ratingValue)) +
   scale_y_continuous(breaks = 7:10)
 ```
+
+## Text Mining
 
 Fazendo a quebra por tokens e removendo stopwords (palavras sem uso analítico), 
 temos:
