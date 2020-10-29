@@ -1,133 +1,135 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR" />
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Language" content="pt">
+    <title>Uma análise da Sitcom Friends &middot; </title>
 
-    <meta name="author" content="Douglas Braga">
-    <meta name="description" content="Para essa análise serão utilizados os seguintes pacotes:
-list.of.packages &lt;- c( &quot;tidyverse&quot;, &quot;httr&quot;, &quot;furrr&quot;, &quot;tictoc&quot; ) is.instaled &lt;- list.of.packages %in% installed.packages() new.packages &lt;- list.of.packages[!(is.instaled)] if(length(new.packages)) install.packages(new.packages) library(tidyverse) Segundo a WikiPedia: &#34;Friends é uma sitcom americana criada por David Crane e Marta Kauffman e apresentada pela rede de televisão NBC entre 22 de setembro de 1994 e 6 de maio de 2004, com um total de 236 episódios. A série girava em torno de um grupo de amigos que vivia no bairro de Greenwich Village, na ilha de Manhattan, na cidade de Nova York.">
-    <meta name="keywords" content="">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="canonical" href="/post/friends-analysis/" />
+
+     <meta name="description" content="1 Friends 1.1 Web Scraping 1.2 Análises 1.2.1 Série Temporal 1.2.2 Text Mining     Para essa análise serão utilizados os seguintes pacotes:
+list.of.packages &amp;lt" /> 
+
+     
     
-      <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
-    
-
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Uma análise da Sitcom Friends"/>
-<meta name="twitter:description" content="Para essa análise serão utilizados os seguintes pacotes:
-list.of.packages &lt;- c( &quot;tidyverse&quot;, &quot;httr&quot;, &quot;furrr&quot;, &quot;tictoc&quot; ) is.instaled &lt;- list.of.packages %in% installed.packages() new.packages &lt;- list.of.packages[!(is.instaled)] if(length(new.packages)) install.packages(new.packages) library(tidyverse) Segundo a WikiPedia: &#34;Friends é uma sitcom americana criada por David Crane e Marta Kauffman e apresentada pela rede de televisão NBC entre 22 de setembro de 1994 e 6 de maio de 2004, com um total de 236 episódios. A série girava em torno de um grupo de amigos que vivia no bairro de Greenwich Village, na ilha de Manhattan, na cidade de Nova York."/>
-
-    <meta property="og:title" content="Uma análise da Sitcom Friends" />
-<meta property="og:description" content="Para essa análise serão utilizados os seguintes pacotes:
-list.of.packages &lt;- c( &quot;tidyverse&quot;, &quot;httr&quot;, &quot;furrr&quot;, &quot;tictoc&quot; ) is.instaled &lt;- list.of.packages %in% installed.packages() new.packages &lt;- list.of.packages[!(is.instaled)] if(length(new.packages)) install.packages(new.packages) library(tidyverse) Segundo a WikiPedia: &#34;Friends é uma sitcom americana criada por David Crane e Marta Kauffman e apresentada pela rede de televisão NBC entre 22 de setembro de 1994 e 6 de maio de 2004, com um total de 236 episódios. A série girava em torno de um grupo de amigos que vivia no bairro de Greenwich Village, na ilha de Manhattan, na cidade de Nova York." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/post/friends-analysis/" />
-<meta property="article:published_time" content="2020-09-13T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-09-13T00:00:00+00:00" />
-
-
     
-      <base href="/post/friends-analysis/">
-    
-    <title>
-  Uma análise da Sitcom Friends · dobraga
-</title>
+ 
+    <meta name="twitter:title" content="Uma análise da Sitcom Friends"/>
+    <meta name="twitter:description" content="1 Friends 1.1 Web Scraping 1.2 Análises 1.2.1 Série Temporal 1.2.2 Text Mining     Para essa análise serão utilizados os seguintes pacotes:
+list.of.packages &amp;lt"/>
+    <meta name="twitter:url" content="/post/friends-analysis/" />
+    <meta name="twitter:site" content="@"/>
 
-    
-      <link rel="canonical" href="/post/friends-analysis/">
+    <meta property="og:site_name" content="" />
+    <meta property="og:title" content="Uma análise da Sitcom Friends &middot; Douglas Braga" />
+    <meta property="og:url" content="/post/friends-analysis/" />
     
 
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="1 Friends 1.1 Web Scraping 1.2 Análises 1.2.1 Série Temporal 1.2.2 Text Mining     Para essa análise serão utilizados os seguintes pacotes:
+list.of.packages &amp;lt" />
 
-    
-      
-      
-      <link rel="stylesheet" href="/css/coder.min.9836c03fe5c87d102278a33e86d0591ef36c89b1e17e8e547ebf84c05cee010e.css" integrity="sha256-mDbAP&#43;XIfRAieKM&#43;htBZHvNsibHhfo5Ufr&#43;EwFzuAQ4=" crossorigin="anonymous" media="screen" />
-    
+    <meta property="article:published_time" content="2020-09-13T00:00:00Z" />
+    <meta property="article:tag" content="webscraping" />
 
-    
-
-    
-      
-        
-        
-        <link rel="stylesheet" href="/css/coder-dark.min.717236c74e0a5208ef73964a9f44c6b443b689a95b270d8b2a40d0c012460dac.css" integrity="sha256-cXI2x04KUgjvc5ZKn0TGtEO2ialbJw2LKkDQwBJGDaw=" crossorigin="anonymous" media="screen" />
-      
-    
-
-    
-
-    
-
-    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
-
-    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-    <link rel="apple-touch-icon"  sizes="180x180" href="/images/apple-touch-icon.png">
 
     <meta name="generator" content="Hugo 0.74.3" />
-  </head>
-  
-  
-  
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="/built/screen.css" /> 
+    <link rel="stylesheet" type="text/css" href="/css/casper-two.css" /> 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" />
     
-  
-  <body class="colorscheme-auto"
-        onload=" twemoji.parse(document.body); "
-  >
-    <main class="wrapper">
-      <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="/">
-      dobraga
-    </a>
-    
-      <span id="dark-mode-toggle" class="float-right">
-        <i class="fas fa-adjust fa-fw"></i>
-      </span>
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fas fa-bars fa-fw"></i>
-      </label>
-      <ul class="navigation-list">
-        
-          
-            <li class="navigation-item">
-              <a class="navigation-link" href="/post/">Posts</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link" href="/about/">Sobre</a>
-            </li>
-          
-        
-        
-        <li class="navigation-item separator">
-          <span>|</span>
-        </li>
-      </ul>
-    
-  </section>
-</nav>
+
+     
+
+</head>
 
 
-      <div class="content">
+<body class="post-template">
+  <div class="site-wrapper"> 
+
+<header class="site-header outer">
+  <div class="inner">
+    <nav class="site-nav">
+      <div class="site-nav-left">
+
+        <ul class="nav" role="menu">
         
-  <section class="container page">
-  <article>
-    <header>
-      <h1>Uma análise da Sitcom Friends</h1>
+        
+        
+            <li class="" role="menuitem">
+              <a href="/">Home</a>
+            </li>
+        
+            <li class="" role="menuitem">
+              <a href="about/">Sobre</a>
+            </li>
+        
+            <li class="" role="menuitem">
+              <a href="/categories/">Categorias</a>
+            </li>
+        
+      </ul></div>
+
+      <div class="site-nav-right">
+        <div class="social-links">
+                    
+
+                    
+
+                    <a class="social-link" href="https://github.com/dobraga" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+
+                    <a class="social-link" href="https://www.linkedin.com/in/douglas-braga-904495b5" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 50 512 512"><path d="M150.65,100.682c0,27.992-22.508,50.683-50.273,50.683c-27.765,0-50.273-22.691-50.273-50.683 C50.104,72.691,72.612,50,100.377,50C128.143,50,150.65,72.691,150.65,100.682z M143.294,187.333H58.277V462h85.017V187.333z M279.195,187.333h-81.541V462h81.541c0,0,0-101.877,0-144.181c0-38.624,17.779-61.615,51.807-61.615 c31.268,0,46.289,22.071,46.289,61.615c0,39.545,0,144.181,0,144.181h84.605c0,0,0-100.344,0-173.915 s-41.689-109.131-99.934-109.131s-82.768,45.369-82.768,45.369V187.333z" /></svg></a>
+
+                    
+        </div>  
+            
+      </div>
+
+    </nav>  
+
+  </div>
+</header>
+
+<main id="site-main" class="site-main outer" role="main">
+  <div class="inner">
+    
+      <article class="post-full post"> 
+    <header class="post-full-header">
+        <section class="post-full-meta">
+            <time class="post-full-meta-date" datetime="2020-09-13">13 September 2020</time>
+                <span class="date-divider">/</span> <a href="/tags/webscraping/">#webscraping</a>&nbsp;
+        </section>
+        <h1 class="post-full-title">Uma análise da Sitcom Friends</h1>
     </header>
-
     
+    <figure class="post-full-image" style="background-image: url(/defimg/3.jpg)">
+    </figure>
+
+    <section class="post-full-content">
+        <div class="kg-card-markdown">
+        
 <link href="/rmarkdown-libs/pagedtable/css/pagedtable.css" rel="stylesheet" />
 <script src="/rmarkdown-libs/pagedtable/js/pagedtable.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#friends"><span class="toc-section-number">1</span> Friends</a><ul>
+<li><a href="#web-scraping"><span class="toc-section-number">1.1</span> Web Scraping</a></li>
+<li><a href="#análises"><span class="toc-section-number">1.2</span> Análises</a><ul>
+<li><a href="#série-temporal"><span class="toc-section-number">1.2.1</span> Série Temporal</a></li>
+<li><a href="#text-mining"><span class="toc-section-number">1.2.2</span> Text Mining</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
 
 <p>Para essa análise serão utilizados os seguintes pacotes:</p>
 <pre class="r"><code>list.of.packages &lt;- c(
@@ -139,18 +141,22 @@ new.packages &lt;- list.of.packages[!(is.instaled)]
 if(length(new.packages)) install.packages(new.packages)
 
 library(tidyverse)</code></pre>
+<div id="friends" class="section level1">
+<h1><span class="header-section-number">1</span> Friends</h1>
 <p>Segundo a WikiPedia: "Friends é uma sitcom americana criada por David Crane e
 Marta Kauffman e apresentada pela rede de televisão NBC entre 22 de setembro
 de 1994 e 6 de maio de 2004, com um total de 236 episódios. A série girava em
 torno de um grupo de amigos que vivia no bairro de Greenwich Village, na ilha
 de Manhattan, na cidade de Nova York.</p>
-<p>programa já foi transmitido em dezenas de países e as reprises de seus
+<p>O programa já foi transmitido em dezenas de países e as reprises de seus
 episódios continuam com boas audiências. O seriado arrecadou seis Prêmios
 Emmy (incluindo um na categoria Emmy do Primetime para Melhor Série de
 Comédia), um Globo de Ouro, dois SAG Awards, e 56 outros prêmios com 152
 nomeações. Em 2002, a revista especializada em televisão TV Guide lançou uma
 lista com os 50 melhores programas de televisão de todos os tempos, e Friends
 constava em 21º lugar."</p>
+<div id="web-scraping" class="section level2">
+<h2><span class="header-section-number">1.1</span> Web Scraping</h2>
 <p>Para essa análise será utilizada a base do IMDB, onde temos diversas informações
 de cada episódio da série. Primeiro vamos buscar as informações gerais do
 episódio.</p>
@@ -158,15 +164,18 @@ episódio.</p>
 títulos do episódios, site com as informações detalhadas e número dos episódios.</p>
 <pre class="r"><code>pega_lista_ep &lt;- function(season=1){
   url &lt;- paste0(&quot;https://www.imdb.com/title/tt0108778/episodes?season=&quot;, season)
-  page &lt;- httr::GET(url) %&gt;% 
+  page &lt;- httr::GET(url) %&gt;%
     xml2::read_html()
-  
-  tag &lt;- xml2::xml_find_all(page, &#39;//*[@id=&quot;episodes_content&quot;]/div[2]/div[2]/div/div[2]/strong/a&#39;)
-  
+
+  tag &lt;- xml2::xml_find_all(
+    page,
+    &#39;//*[@id=&quot;episodes_content&quot;]/div[2]/div[2]/div/div[2]/strong/a&#39;
+  )
+
   tibble(
     ep_name = xml2::xml_attr(tag, &quot;title&quot;),
     url = paste0(&quot;https://www.imdb.com/&quot;, xml2::xml_attr(tag, &quot;href&quot;))
-  ) %&gt;% 
+  ) %&gt;%
     mutate(season = season, nu_ep_temp = row_number())
 }
 
@@ -176,8 +185,9 @@ head(pega_lista_ep(1), 10)</code></pre>
 {"columns":[{"label":["ep_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["url"],"name":[2],"type":["chr"],"align":["left"]},{"label":["season"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["nu_ep_temp"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"The One Where Monica Gets a Roommate","2":"https://www.imdb.com//title/tt0583459/?ref_=ttep_ep1","3":"1","4":"1"},{"1":"The One with the Sonogram at the End","2":"https://www.imdb.com//title/tt0583647/?ref_=ttep_ep2","3":"1","4":"2"},{"1":"The One with the Thumb","2":"https://www.imdb.com//title/tt0583653/?ref_=ttep_ep3","3":"1","4":"3"},{"1":"The One with George Stephanopoulos","2":"https://www.imdb.com//title/tt0583521/?ref_=ttep_ep4","3":"1","4":"4"},{"1":"The One with the East German Laundry Detergent","2":"https://www.imdb.com//title/tt0583599/?ref_=ttep_ep5","3":"1","4":"5"},{"1":"The One with the Butt","2":"https://www.imdb.com//title/tt0583585/?ref_=ttep_ep6","3":"1","4":"6"},{"1":"The One with the Blackout","2":"https://www.imdb.com//title/tt0583579/?ref_=ttep_ep7","3":"1","4":"7"},{"1":"The One Where Nana Dies Twice","2":"https://www.imdb.com//title/tt0583462/?ref_=ttep_ep8","3":"1","4":"8"},{"1":"The One Where Underdog Gets Away","2":"https://www.imdb.com//title/tt0583492/?ref_=ttep_ep9","3":"1","4":"9"},{"1":"The One with the Monkey","2":"https://www.imdb.com//title/tt0583630/?ref_=ttep_ep10","3":"1","4":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>Agora buscando as informações de todas as temporadas, temos:</p>
-<pre class="r"><code>df &lt;-  purrr::map_df(1:10, pega_lista_ep) %&gt;% 
+<p>Agora buscando as informações de todas as temporadas e numerando os episódios,
+temos:</p>
+<pre class="r"><code>df &lt;-  purrr::map_df(1:10, pega_lista_ep) %&gt;%
   mutate(
     nu_ep = row_number()
   )
@@ -191,172 +201,344 @@ head(df, 10)</code></pre>
 <p>Agora da página principal de cada episódio podemos buscar mais informações, como
 a descrição do episódio e avaliação que serão o foco dessa análise.</p>
 <pre class="r"><code>pega_info_ep &lt;- function(url){
-  page &lt;- httr::GET(url) %&gt;% 
-    xml2::read_html() 
-  
+  page &lt;- httr::GET(url) %&gt;%
+    xml2::read_html()
+
   ratingValue &lt;- xml2::xml_find_all(
     page,
     &#39;//*[@id=&quot;title-overview-widget&quot;]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/strong/span&#39;
   ) %&gt;% xml2::xml_text() %&gt;% parse_number()
-  
+
   ratingCount &lt;- xml2::xml_find_all(
     page,
     &#39;//*[@id=&quot;title-overview-widget&quot;]/div[1]/div[2]/div[2]/div[1]/div[1]/a/span&#39;
   ) %&gt;% xml2::xml_text() %&gt;% parse_number()
-  
+
   diretor &lt;- xml2::xml_find_all(
     page,
     &#39;//*[@id=&quot;title-overview-widget&quot;]/div[2]/div[2]/div[1]/div[2]/a&#39;
   ) %&gt;% xml2::xml_text()
-  
+
   summarys &lt;- paste0(
     &quot;https://www.imdb.com&quot;,
-    xml2::xml_find_all(page, &#39;//*[@id=&quot;titleStoryLine&quot;]/span[2]/a[1]&#39;) %&gt;% 
+    xml2::xml_find_all(page, &#39;//*[@id=&quot;titleStoryLine&quot;]/span[2]/a[1]&#39;) %&gt;%
       xml2::xml_attr(&quot;href&quot;)
-  ) %&gt;% httr::GET(.) %&gt;% 
-    xml2::read_html() %&gt;% 
-    xml2::xml_find_all(&#39;//*[@id=&quot;plot-summaries-content&quot; or @id=&quot;plot-synopsis-content&quot;]/li&#39;) %&gt;% 
+  ) %&gt;% httr::GET(.) %&gt;%
+    xml2::read_html() %&gt;%
+    xml2::xml_find_all(
+      &#39;//*[@id=&quot;plot-summaries-content&quot; or @id=&quot;plot-synopsis-content&quot;]/li&#39;
+    ) %&gt;%
     xml2::xml_text()
-  
+
   arg &lt;- which.max(purrr::map_dbl(summarys, str_length))
-  
-  summary &lt;- summarys[arg] %&gt;% 
-    stringr::str_remove(&quot;—.+&quot;) %&gt;% 
+
+  summary &lt;- summarys[arg] %&gt;%
+    stringr::str_remove(&quot;—.+&quot;) %&gt;%
     stringr::str_squish()
-  
+
   tibble(
     url, ratingValue, ratingCount, diretor, summary
   )
 }</code></pre>
 <p>Como isso podemos pegar a informação detalhada de cada episódio, como, por
 exemplo, as informações detalhadas do primeiro episódio:</p>
-<pre class="r"><code>t(pega_info_ep(&quot;https://www.imdb.com/title/tt0583459/?ref_=ttep_ep1&quot;))</code></pre>
-<pre><code>##             [,1]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-## url         &quot;https://www.imdb.com/title/tt0583459/?ref_=ttep_ep1&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-## ratingValue &quot;8.3&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-## ratingCount &quot;6907&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-## diretor     &quot;James Burrows&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
-## summary     &quot;In a New York City coffee house called Central Perk, we&#39;re introduced to six friends: chef Monica Geller, data controller Chandler Bing who lives across the hall from Monica, Chandler&#39;s roommate/actor Joey Tribbiani, Monica&#39;s brother Ross Geller, new ageist Phoebe Buffay, and \&quot;born to be a wife\&quot; Rachel Green. One of the friends is just getting into a relationship and two are just getting out of one each. Monica is in the former category, going on a real/not-so-real date, dates with guys she&#39;s interested in being a rare occurrence. But she is excited by her upcoming one with Paul the Wine Guy from her place of work. Out on their date, their intimate conversation includes the fact that trauma from his last relationship has left him sexually incapable, something that only the right woman like Monica can fix, and she apparently does. Later however she finds that it was just a line to get her into bed, and thus her streak with the \&quot;wrong guy\&quot; continues. Ross is one of the two in the getting out of a relationship category. He and his ex-wife Carol broke up when she found out she was a lesbian. However waltzing into town is his old crush and Monica&#39;s best friend from high school Rachel, who is the second friend on a break-up: she has just left her fiancé Barry at the altar, she still in her wedding dress when she first shows up at the coffee house. This move was based on the fact that she realized she was more interested in being married than in being with Mr. Potato Head lookalike Barry. She and Monica had not seen each other since high school, she turning to Monica now since Monica is the only person she knows in the city. Rachel barges into Monica&#39;s life since she has no skills, no job and no money - up to this point in her life, she has lived off the wealth of her father - but needs to flee the direction of her life with Barry and her parents. Although she now has a place to stay with Monica, she needs a job and she needs a new support network. As old flames die slow and reignite easily, Ross hopes to be one of her more intimate supports.&quot;</code></pre>
-<p>Como temos mais de 200 linhas (episódios) seria muito demorado fazer a busca
-sequencialmente dessas informações, por isso, será feita uma busca em paralelo,
-para efeito de comparação a busca de 10 episódios sequencialmente demora por
-volta de:</p>
+<pre class="r"><code>pega_info_ep(&quot;https://www.imdb.com/title/tt0583459/?ref_=ttep_ep1&quot;)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["url"],"name":[1],"type":["chr"],"align":["left"]},{"label":["ratingValue"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["ratingCount"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["diretor"],"name":[4],"type":["chr"],"align":["left"]},{"label":["summary"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"https://www.imdb.com/title/tt0583459/?ref_=ttep_ep1","2":"8.3","3":"7014","4":"James Burrows","5":"In a New York City coffee house called Central Perk, we're introduced to six friends: chef Monica Geller, data controller Chandler Bing who lives across the hall from Monica, Chandler's roommate/actor Joey Tribbiani, Monica's brother Ross Geller, new ageist Phoebe Buffay, and \"born to be a wife\" Rachel Green. One of the friends is just getting into a relationship and two are just getting out of one each. Monica is in the former category, going on a real/not-so-real date, dates with guys she's interested in being a rare occurrence. But she is excited by her upcoming one with Paul the Wine Guy from her place of work. Out on their date, their intimate conversation includes the fact that trauma from his last relationship has left him sexually incapable, something that only the right woman like Monica can fix, and she apparently does. Later however she finds that it was just a line to get her into bed, and thus her streak with the \"wrong guy\" continues. Ross is one of the two in the getting out of a relationship category. He and his ex-wife Carol broke up when she found out she was a lesbian. However waltzing into town is his old crush and Monica's best friend from high school Rachel, who is the second friend on a break-up: she has just left her fiancé Barry at the altar, she still in her wedding dress when she first shows up at the coffee house. This move was based on the fact that she realized she was more interested in being married than in being with Mr. Potato Head lookalike Barry. She and Monica had not seen each other since high school, she turning to Monica now since Monica is the only person she knows in the city. Rachel barges into Monica's life since she has no skills, no job and no money - up to this point in her life, she has lived off the wealth of her father - but needs to flee the direction of her life with Barry and her parents. Although she now has a place to stay with Monica, she needs a job and she needs a new support network. As old flames die slow and reignite easily, Ross hopes to be one of her more intimate supports."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Como temos mais de 200 episódios para buscar as informações seria muito demorado
+fazer a busca sequencialmente, por isso, será feita uma busca em paralelo, para
+efeito de comparação a busca de 10 episódios sequencialmente demora por volta de:</p>
 <pre class="r"><code>tictoc::tic()
 x &lt;- map_dfr(df$url[1:10], pega_info_ep)
 tictoc::toc()</code></pre>
-<pre><code>## 20.152 sec elapsed</code></pre>
+<pre><code>## 21.689 sec elapsed</code></pre>
 <pre class="r"><code>future::plan(future::multisession)</code></pre>
 <p>Agora, fazendo a busca em paralelo temos um tempo de:</p>
 <pre class="r"><code>tictoc::tic()
 x &lt;- furrr::future_map_dfr(df$url[1:10], pega_info_ep)
 tictoc::toc()</code></pre>
-<pre><code>## 5.944 sec elapsed</code></pre>
-<p>Uma queda considerável no tempo de execução, agora buscando a inormações de
+<pre><code>## 6.575 sec elapsed</code></pre>
+<p>Uma queda considerável no tempo de execução, agora buscando a informações de
 todos os episódios:</p>
 <pre class="r"><code>tictoc::tic()
 df_ep &lt;- furrr::future_map_dfr(df$url, pega_info_ep)
 tictoc::toc()</code></pre>
-<pre><code>## 95.433 sec elapsed</code></pre>
+<pre><code>## 102.269 sec elapsed</code></pre>
 <p>Com isso, temos a seguinte base de dados:</p>
 <pre class="r"><code>df &lt;- df %&gt;% left_join(df_ep, by=&quot;url&quot;)
 head(df, 10)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["ep_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["url"],"name":[2],"type":["chr"],"align":["left"]},{"label":["season"],"name":[3],"type":["int"],"align":["right"]},{"label":["nu_ep_temp"],"name":[4],"type":["int"],"align":["right"]},{"label":["nu_ep"],"name":[5],"type":["int"],"align":["right"]},{"label":["ratingValue"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["ratingCount"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["diretor"],"name":[8],"type":["chr"],"align":["left"]},{"label":["summary"],"name":[9],"type":["chr"],"align":["left"]}],"data":[{"1":"The One Where Monica Gets a Roommate","2":"https://www.imdb.com//title/tt0583459/?ref_=ttep_ep1","3":"1","4":"1","5":"1","6":"8.3","7":"6907","8":"James Burrows","9":"In a New York City coffee house called Central Perk, we're introduced to six friends: chef Monica Geller, data controller Chandler Bing who lives across the hall from Monica, Chandler's roommate/actor Joey Tribbiani, Monica's brother Ross Geller, new ageist Phoebe Buffay, and \"born to be a wife\" Rachel Green. One of the friends is just getting into a relationship and two are just getting out of one each. Monica is in the former category, going on a real/not-so-real date, dates with guys she's interested in being a rare occurrence. But she is excited by her upcoming one with Paul the Wine Guy from her place of work. Out on their date, their intimate conversation includes the fact that trauma from his last relationship has left him sexually incapable, something that only the right woman like Monica can fix, and she apparently does. Later however she finds that it was just a line to get her into bed, and thus her streak with the \"wrong guy\" continues. Ross is one of the two in the getting out of a relationship category. He and his ex-wife Carol broke up when she found out she was a lesbian. However waltzing into town is his old crush and Monica's best friend from high school Rachel, who is the second friend on a break-up: she has just left her fiancé Barry at the altar, she still in her wedding dress when she first shows up at the coffee house. This move was based on the fact that she realized she was more interested in being married than in being with Mr. Potato Head lookalike Barry. She and Monica had not seen each other since high school, she turning to Monica now since Monica is the only person she knows in the city. Rachel barges into Monica's life since she has no skills, no job and no money - up to this point in her life, she has lived off the wealth of her father - but needs to flee the direction of her life with Barry and her parents. Although she now has a place to stay with Monica, she needs a job and she needs a new support network. As old flames die slow and reignite easily, Ross hopes to be one of her more intimate supports."},{"1":"The One with the Sonogram at the End","2":"https://www.imdb.com//title/tt0583647/?ref_=ttep_ep2","3":"1","4":"2","5":"2","6":"8.1","7":"5210","8":"James Burrows","9":"Ross finds out that his ex-wife Carol is pregnant with his child. He's stunned to learn she wants to give the baby her and her lesbian lovers last name. Ross and Monica's parents come for dinner which makes Monica really stressed. Rachel decides to return her engagement ring to Barry, the man she left at the altar and learns that he didn't let their honeymoon go to waste. He spent it with her maid of honor Mindy."},{"1":"The One with the Thumb","2":"https://www.imdb.com//title/tt0583653/?ref_=ttep_ep3","3":"1","4":"3","5":"3","6":"8.2","7":"4911","8":"James Burrows","9":"Monica is reluctant to introduce her new boyfriend, Alan, to her friends because they've mocked all of the boyfriend they've met before. To her surprise, they love Alan. However, she realizes she doesn't feel a spark with Alan and breaks up with him. Her friends take the news very hard, but Alan is relieved (since he couldn't stand her friends). Chandler resumes his smoking habit. Phoebe encounters a problem with her bank account, when a bank error in her favor nets her $1,000. She gives the money (and a complementary football phone) away to a homeless friend, who in turn buys her a soda. When Phoebe opens it, she sees a thumb, so the soda company gives her $7,000."},{"1":"The One with George Stephanopoulos","2":"https://www.imdb.com//title/tt0583521/?ref_=ttep_ep4","3":"1","4":"4","5":"4","6":"8.1","7":"4756","8":"James Burrows","9":"When Monica fails to make the anniversary of Ross's first time ever, not just with his lesbian ex Carol, pass unnoticed, he gets terribly depressed. Joey and Chandler take Ross to a hockey game to distract him, but it doesn't help when he catches a puck- which breaks his nose, and Nurse Sizemore in hospital admissions proves a bureaucratic hurdle even Chandler can't take... Rachel is happy to get her first-ever pay-check, till she notices how little is left after taxes, and has to pretend job-pride to her spoiled brat friends bunch turning up in Central Perk. Monica, Phoebe and Rachel get hunky TV celebrity George Stephanopoulos's pizza delivered by mistake, and shamelessly spy on him from Monica's balcony..."},{"1":"The One with the East German Laundry Detergent","2":"https://www.imdb.com//title/tt0583599/?ref_=ttep_ep5","3":"1","4":"5","5":"5","6":"8.5","7":"4726","8":"Pamela Fryman","9":"Eager to spend time with Rachel, Ross pretends his building's washroom is rat-infested so he can join her at the laundromat. Chandler points out this could be a 'date' and the first time she'll see his underwear so it shouldn't be dirty! Rachel, the spoiled 'laundry virgin' feels managing this domestic chore is a real step to independence, but despite Ross's good advice she leaves a red sock in the machine. The real accomplishment comes where she has to stand up as no-nonsense-New Yorker against a rude, aggressive woman who invents rules to pretend it's not Rachel turn to do her laundry. Joey realizes he regrets dumping foxy Angela when he learns she is dating Bob. He proposes a double-date, then needs a girl stat. Monica agrees to be Joey's date but when she sees hunky Bob and realizes he's not Angela's brother she starts to enjoy the evening. Chandler drinks too much espresso while desperately trying to break up with neurotic Janice."},{"1":"The One with the Butt","2":"https://www.imdb.com//title/tt0583585/?ref_=ttep_ep6","3":"1","4":"6","5":"6","6":"8.1","7":"4537","8":"Arlene Sanford","9":"Joey had high hopes for his lead role in 'Freud!', but the musical drama slash other nonsense is too horrible for words. For Chandler, however, it's a Godsent opportunity as he sees the breathtaking beauty Aurora in the audience. Chandler is encouraged to ask her out as 'the best-looking women often have measly men.' After a great night out, Chandler sadly reports she actually has an adventurous life, including a husband Rick and a lover Ethan. The girls commiserate as he can't just be her sex-toy-boy. However, think it is a dream come true as he would get the fun without the responsibility. Joey's role still pays off as an agent saw him and casts him as his idol Al Pacino's butt double. Alas the director can't appreciate a Joey's artistic ambitions in butt-acting. Chandler discovers good sex is no doesn't make up for lack of monogamy when Aurora announces another lover, Andrew, complicating her busy bed-schedule even further."},{"1":"The One with the Blackout","2":"https://www.imdb.com//title/tt0583579/?ref_=ttep_ep7","3":"1","4":"7","5":"7","6":"9.0","7":"5806","8":"James Burrows","9":"When a power-cut blacks out most of New York City, Chandler, to his delight finds himself trapped inside an ATM vestibule with Victoria's Secret model Jill Goodacre. She lets him use her cell-phone, and offers him gum which he instantly regrets refusing. He accidentally spits out her gum which he finally accepted, then picks up some to put back in his mouth and begins to choke when he realizes it wasn't the original gum. The others kill time in Monica's apartment, lit by the light from a Menorah, telling stories of the weirdest places they ever had sex. Joey tells Ross he waited too long moving onto Rachel and is now too far into the 'friend's zone.' Ross still tries to make a move on Rachel while stargazing on the balcony. Joey keeps the other girls inside by pretending Ross prepares a birthday surprise party for Monica. A wandering cat scratches Ross. Rachel and Phoebe go knocking on their neighbor's doors to find the cat's owner, seeing through odd neighbor Mr. Heckles's who lies about being the owner. On their mission, they bump into the hunky, and actual cat-owner, Paolo, who only speaks Italian. Rachel brings him back to the apartment where he outstrips Ross's flirting, even not being able to speak English."},{"1":"The One Where Nana Dies Twice","2":"https://www.imdb.com//title/tt0583462/?ref_=ttep_ep8","3":"1","4":"8","5":"8","6":"8.1","7":"4423","8":"James Burrows","9":"Chandler is shocked to learn that people he works with think that he is gay. He asks his friends why, and they tell him that they also thought that he was gay when they first met him. Monica's Grandmother dies, and Ross falls down the open grave, and gets high on pain killers."},{"1":"The One Where Underdog Gets Away","2":"https://www.imdb.com//title/tt0583492/?ref_=ttep_ep9","3":"1","4":"9","5":"9","6":"8.2","7":"4293","8":"James Burrows","9":"With their parents away Monica and Ross decide to have Thanksgiving dinner alone together at Monica's. However, one by one the other friends join them. Rachel says that she can't afford to buy a ticket for Vail to be with her family. Joey confesses that his family thinks that he has V.D. because he appeared in an ad campaign. Chandler recalls his story of how he doesn't eat Thanksgiving food because of bad family memories. Phoebe brings her Grandmother, confesses that she observes Thanksgiving in December because her Grandma's boyfriend is Lunar. As the Macy's parade passes by, the Underdog balloon gets loose. The friends rush onto the terrace for a better view and get locked out, so the dinner burns. Chandler is happy because everyone eats grilled cheese sandwiches."},{"1":"The One with the Monkey","2":"https://www.imdb.com//title/tt0583630/?ref_=ttep_ep10","3":"1","4":"10","5":"10","6":"8.1","7":"4320","8":"Peter Bonerz","9":"Ross is tired of living alone but doesn't want a roommate at his age so he adopts the capucin monkey Marcel. Marcel is cute in everybody's eyes, except cleaning freak Monica who returns little of the monkey's love. With Paolo about to return to Rome, it looks like New Year's Eve will see the friends desperate for someone to kiss at midnight, so Chandler launches a pact for them all not to kiss anyone. However, Rachel learns Paolo can be back early, Monica asks her ex Fun Bobby and Chandler invites his hellish ex Janice. Joey met a single mother shopping, so Ross fears to be the only single left after Phoebe hooks up with scientist David."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["ep_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["url"],"name":[2],"type":["chr"],"align":["left"]},{"label":["season"],"name":[3],"type":["int"],"align":["right"]},{"label":["nu_ep_temp"],"name":[4],"type":["int"],"align":["right"]},{"label":["nu_ep"],"name":[5],"type":["int"],"align":["right"]},{"label":["ratingValue"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["ratingCount"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["diretor"],"name":[8],"type":["chr"],"align":["left"]},{"label":["summary"],"name":[9],"type":["chr"],"align":["left"]}],"data":[{"1":"The One Where Monica Gets a Roommate","2":"https://www.imdb.com//title/tt0583459/?ref_=ttep_ep1","3":"1","4":"1","5":"1","6":"8.3","7":"7014","8":"James Burrows","9":"In a New York City coffee house called Central Perk, we're introduced to six friends: chef Monica Geller, data controller Chandler Bing who lives across the hall from Monica, Chandler's roommate/actor Joey Tribbiani, Monica's brother Ross Geller, new ageist Phoebe Buffay, and \"born to be a wife\" Rachel Green. One of the friends is just getting into a relationship and two are just getting out of one each. Monica is in the former category, going on a real/not-so-real date, dates with guys she's interested in being a rare occurrence. But she is excited by her upcoming one with Paul the Wine Guy from her place of work. Out on their date, their intimate conversation includes the fact that trauma from his last relationship has left him sexually incapable, something that only the right woman like Monica can fix, and she apparently does. Later however she finds that it was just a line to get her into bed, and thus her streak with the \"wrong guy\" continues. Ross is one of the two in the getting out of a relationship category. He and his ex-wife Carol broke up when she found out she was a lesbian. However waltzing into town is his old crush and Monica's best friend from high school Rachel, who is the second friend on a break-up: she has just left her fiancé Barry at the altar, she still in her wedding dress when she first shows up at the coffee house. This move was based on the fact that she realized she was more interested in being married than in being with Mr. Potato Head lookalike Barry. She and Monica had not seen each other since high school, she turning to Monica now since Monica is the only person she knows in the city. Rachel barges into Monica's life since she has no skills, no job and no money - up to this point in her life, she has lived off the wealth of her father - but needs to flee the direction of her life with Barry and her parents. Although she now has a place to stay with Monica, she needs a job and she needs a new support network. As old flames die slow and reignite easily, Ross hopes to be one of her more intimate supports."},{"1":"The One with the Sonogram at the End","2":"https://www.imdb.com//title/tt0583647/?ref_=ttep_ep2","3":"1","4":"2","5":"2","6":"8.0","7":"5295","8":"James Burrows","9":"Ross finds out that his ex-wife Carol is pregnant with his child. He's stunned to learn she wants to give the baby her and her lesbian lovers last name. Ross and Monica's parents come for dinner which makes Monica really stressed. Rachel decides to return her engagement ring to Barry, the man she left at the altar and learns that he didn't let their honeymoon go to waste. He spent it with her maid of honor Mindy."},{"1":"The One with the Thumb","2":"https://www.imdb.com//title/tt0583653/?ref_=ttep_ep3","3":"1","4":"3","5":"3","6":"8.2","7":"4988","8":"James Burrows","9":"Monica is reluctant to introduce her new boyfriend, Alan, to her friends because they've mocked all of the boyfriend they've met before. To her surprise, they love Alan. However, she realizes she doesn't feel a spark with Alan and breaks up with him. Her friends take the news very hard, but Alan is relieved (since he couldn't stand her friends). Chandler resumes his smoking habit. Phoebe encounters a problem with her bank account, when a bank error in her favor nets her $1,000. She gives the money (and a complementary football phone) away to a homeless friend, who in turn buys her a soda. When Phoebe opens it, she sees a thumb, so the soda company gives her $7,000."},{"1":"The One with George Stephanopoulos","2":"https://www.imdb.com//title/tt0583521/?ref_=ttep_ep4","3":"1","4":"4","5":"4","6":"8.1","7":"4833","8":"James Burrows","9":"When Monica fails to make the anniversary of Ross's first time ever, not just with his lesbian ex Carol, pass unnoticed, he gets terribly depressed. Joey and Chandler take Ross to a hockey game to distract him, but it doesn't help when he catches a puck- which breaks his nose, and Nurse Sizemore in hospital admissions proves a bureaucratic hurdle even Chandler can't take... Rachel is happy to get her first-ever pay-check, till she notices how little is left after taxes, and has to pretend job-pride to her spoiled brat friends bunch turning up in Central Perk. Monica, Phoebe and Rachel get hunky TV celebrity George Stephanopoulos's pizza delivered by mistake, and shamelessly spy on him from Monica's balcony..."},{"1":"The One with the East German Laundry Detergent","2":"https://www.imdb.com//title/tt0583599/?ref_=ttep_ep5","3":"1","4":"5","5":"5","6":"8.5","7":"4801","8":"Pamela Fryman","9":"Eager to spend time with Rachel, Ross pretends his building's washroom is rat-infested so he can join her at the laundromat. Chandler points out this could be a 'date' and the first time she'll see his underwear so it shouldn't be dirty! Rachel, the spoiled 'laundry virgin' feels managing this domestic chore is a real step to independence, but despite Ross's good advice she leaves a red sock in the machine. The real accomplishment comes where she has to stand up as no-nonsense-New Yorker against a rude, aggressive woman who invents rules to pretend it's not Rachel turn to do her laundry. Joey realizes he regrets dumping foxy Angela when he learns she is dating Bob. He proposes a double-date, then needs a girl stat. Monica agrees to be Joey's date but when she sees hunky Bob and realizes he's not Angela's brother she starts to enjoy the evening. Chandler drinks too much espresso while desperately trying to break up with neurotic Janice."},{"1":"The One with the Butt","2":"https://www.imdb.com//title/tt0583585/?ref_=ttep_ep6","3":"1","4":"6","5":"6","6":"8.1","7":"4607","8":"Arlene Sanford","9":"Joey had high hopes for his lead role in 'Freud!', but the musical drama slash other nonsense is too horrible for words. For Chandler, however, it's a Godsent opportunity as he sees the breathtaking beauty Aurora in the audience. Chandler is encouraged to ask her out as 'the best-looking women often have measly men.' After a great night out, Chandler sadly reports she actually has an adventurous life, including a husband Rick and a lover Ethan. The girls commiserate as he can't just be her sex-toy-boy. However, think it is a dream come true as he would get the fun without the responsibility. Joey's role still pays off as an agent saw him and casts him as his idol Al Pacino's butt double. Alas the director can't appreciate a Joey's artistic ambitions in butt-acting. Chandler discovers good sex is no doesn't make up for lack of monogamy when Aurora announces another lover, Andrew, complicating her busy bed-schedule even further."},{"1":"The One with the Blackout","2":"https://www.imdb.com//title/tt0583579/?ref_=ttep_ep7","3":"1","4":"7","5":"7","6":"9.0","7":"5900","8":"James Burrows","9":"When a power-cut blacks out most of New York City, Chandler, to his delight finds himself trapped inside an ATM vestibule with Victoria's Secret model Jill Goodacre. She lets him use her cell-phone, and offers him gum which he instantly regrets refusing. He accidentally spits out her gum which he finally accepted, then picks up some to put back in his mouth and begins to choke when he realizes it wasn't the original gum. The others kill time in Monica's apartment, lit by the light from a Menorah, telling stories of the weirdest places they ever had sex. Joey tells Ross he waited too long moving onto Rachel and is now too far into the 'friend's zone.' Ross still tries to make a move on Rachel while stargazing on the balcony. Joey keeps the other girls inside by pretending Ross prepares a birthday surprise party for Monica. A wandering cat scratches Ross. Rachel and Phoebe go knocking on their neighbor's doors to find the cat's owner, seeing through odd neighbor Mr. Heckles's who lies about being the owner. On their mission, they bump into the hunky, and actual cat-owner, Paolo, who only speaks Italian. Rachel brings him back to the apartment where he outstrips Ross's flirting, even not being able to speak English."},{"1":"The One Where Nana Dies Twice","2":"https://www.imdb.com//title/tt0583462/?ref_=ttep_ep8","3":"1","4":"8","5":"8","6":"8.1","7":"4493","8":"James Burrows","9":"Chandler is shocked to learn that people he works with think that he is gay. He asks his friends why, and they tell him that they also thought that he was gay when they first met him. Monica's Grandmother dies, and Ross falls down the open grave, and gets high on pain killers."},{"1":"The One Where Underdog Gets Away","2":"https://www.imdb.com//title/tt0583492/?ref_=ttep_ep9","3":"1","4":"9","5":"9","6":"8.2","7":"4359","8":"James Burrows","9":"With their parents away Monica and Ross decide to have Thanksgiving dinner alone together at Monica's. However, one by one the other friends join them. Rachel says that she can't afford to buy a ticket for Vail to be with her family. Joey confesses that his family thinks that he has V.D. because he appeared in an ad campaign. Chandler recalls his story of how he doesn't eat Thanksgiving food because of bad family memories. Phoebe brings her Grandmother, confesses that she observes Thanksgiving in December because her Grandma's boyfriend is Lunar. As the Macy's parade passes by, the Underdog balloon gets loose. The friends rush onto the terrace for a better view and get locked out, so the dinner burns. Chandler is happy because everyone eats grilled cheese sandwiches."},{"1":"The One with the Monkey","2":"https://www.imdb.com//title/tt0583630/?ref_=ttep_ep10","3":"1","4":"10","5":"10","6":"8.1","7":"4385","8":"Peter Bonerz","9":"Ross is tired of living alone but doesn't want a roommate at his age so he adopts the capucin monkey Marcel. Marcel is cute in everybody's eyes, except cleaning freak Monica who returns little of the monkey's love. With Paolo about to return to Rome, it looks like New Year's Eve will see the friends desperate for someone to kiss at midnight, so Chandler launches a pact for them all not to kiss anyone. However, Rachel learns Paolo can be back early, Monica asks her ex Fun Bobby and Chandler invites his hellish ex Janice. Joey met a single mother shopping, so Ross fears to be the only single left after Phoebe hooks up with scientist David."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<pre class="r"><code>df %&gt;% 
+</div>
+<div id="análises" class="section level2">
+<h2><span class="header-section-number">1.2</span> Análises</h2>
+<div id="série-temporal" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> Série Temporal</h3>
+<pre class="r"><code>df %&gt;%
   ggplot(aes(x = nu_ep, y = ratingValue)) +
   geom_line()</code></pre>
 <p><img src="/post/2020-09-13-friends-analysis_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<pre class="r"><code>df %&gt;% 
-  group_by(season) %&gt;% 
+<pre class="r"><code>df %&gt;%
+  group_by(season) %&gt;%
   mutate(
     MeanRatingValue = mean(ratingValue),
     diff = MeanRatingValue - ratingValue
-  ) %&gt;% 
-  ungroup() %&gt;% 
-  ggplot() + 
-  geom_line(aes(x = nu_ep, y = MeanRatingValue)) + 
+  ) %&gt;%
+  ungroup() %&gt;%
+  ggplot() +
+  geom_line(aes(x = nu_ep, y = MeanRatingValue)) +
   geom_segment(aes(x = nu_ep, xend = nu_ep, y = MeanRatingValue, yend = ratingValue)) +
   geom_point(aes(x = nu_ep, y = ratingValue)) +
   scale_y_continuous(breaks = 7:10)</code></pre>
 <p><img src="/post/2020-09-13-friends-analysis_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="text-mining" class="section level3">
+<h3><span class="header-section-number">1.2.2</span> Text Mining</h3>
 <p>Fazendo a quebra por tokens e removendo stopwords (palavras sem uso analítico),
 temos:</p>
-<pre class="r"><code>df_tokens &lt;- df %&gt;% 
-  select(season, nu_ep_temp, nu_ep, ratingValue, ratingCount, summary) %&gt;% 
-  tidytext::unnest_tokens(word, summary) %&gt;% 
+<pre class="r"><code>df_tokens &lt;- df %&gt;%
+  select(season, nu_ep_temp, nu_ep, ratingValue, ratingCount, summary) %&gt;%
+  tidytext::unnest_tokens(word, summary) %&gt;%
   anti_join(tidytext::stop_words, by = &quot;word&quot;)
 
 head(df_tokens, 20)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["season"],"name":[1],"type":["int"],"align":["right"]},{"label":["nu_ep_temp"],"name":[2],"type":["int"],"align":["right"]},{"label":["nu_ep"],"name":[3],"type":["int"],"align":["right"]},{"label":["ratingValue"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["ratingCount"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["word"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"york"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"city"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"coffee"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"house"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"called"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"central"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"perk"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"introduced"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"friends"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"chef"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"monica"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"geller"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"data"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"controller"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"chandler"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"bing"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"lives"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"hall"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"monica"},{"1":"1","2":"1","3":"1","4":"8.3","5":"6907","6":"chandler's"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["season"],"name":[1],"type":["int"],"align":["right"]},{"label":["nu_ep_temp"],"name":[2],"type":["int"],"align":["right"]},{"label":["nu_ep"],"name":[3],"type":["int"],"align":["right"]},{"label":["ratingValue"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["ratingCount"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["word"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"york"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"city"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"coffee"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"house"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"called"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"central"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"perk"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"introduced"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"friends"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"chef"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"monica"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"geller"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"data"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"controller"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"chandler"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"bing"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"lives"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"hall"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"monica"},{"1":"1","2":"1","3":"1","4":"8.3","5":"7014","6":"chandler's"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<pre class="r"><code>df_tokens %&gt;% 
-  group_by(season, word) %&gt;% 
-  summarise(n = n()) %&gt;% 
-  top_n(10, n) %&gt;% 
+<pre class="r"><code>df_tokens %&gt;%
+  group_by(season, word) %&gt;%
+  summarise(n = n()) %&gt;%
+  top_n(10, n) %&gt;%
   ggplot(aes(x = n, y = reorder(word, n))) +
   geom_col() + facet_wrap(~season, scales = &quot;free&quot;)</code></pre>
 <pre><code>## `summarise()` regrouping output by &#39;season&#39; (override with `.groups` argument)</code></pre>
 <p><img src="/post/2020-09-13-friends-analysis_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-
-  </article>
-</section>
-
-  
-
-      </div>
-
-      
-  <footer class="footer">
-    <section class="container">
-      
-      
-        ©
-        
-        2020
-         Douglas Braga 
-      
-      
-         · 
-         <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
-      
-      
+</div>
+</div>
+</div>
+    
+        </div>
     </section>
-  </footer>
 
-    </main>
-
+    <footer class="post-full-footer">
+      <section class="author-card">
+        <img class="author-profile-image" src="https://media-exp1.licdn.com/dms/image/C4D03AQEHaQ5Kc2cAmw/profile-displayphoto-shrink_200_200/0?e=1609372800&amp;v=beta&amp;t=yheJJ4d2GWxJdNd7ZB9vEGQ8KLbsVAdwEaODYoIILy8" alt="Author" />
+        <section class="author-card-content">
+            <h4 class="author-card-name"><a href="/">Douglas Braga</a></h4>
+                <p></p>
+        </section>
+      </section>
+    </footer>
+</article>
     
+    
+    
+
+  </div>
+</main>
+
+
+<aside class="read-next outer">
+  <div class="inner">
+    <div class="read-next-feed">      
       
-      <script src="/js/dark-mode.min.0213e1773e6d1c5a644f847c67a6f8abac49a3776e2976f6008038af8c5b76a1.js"></script>
+
+      
+      <article class="post-card post"> 
+    
+    <a class="post-card-image-link" href="/post/aprendizagem-por-refor%C3%A7o/">
+      <div class="post-card-image" style="background-image: url(/defimg/3.jpg)"></div>
+    </a>    
     
 
+    <div class="post-card-content">
+      <a class="post-card-content-link" href="/post/aprendizagem-por-refor%C3%A7o/">
+          <header class="post-card-header">
+              <span class="post-card-tags">
+              #python  </span>
+              
+              <h2 class="post-card-title">Aprendizagem por reforço</h2>
+          </header>
+          <section class="post-card-excerpt">
+              
+                <p>   1 Introdução   1 Introdução   </p>
+              
+          </section>
+      </a>
+
+      <footer class="post-card-meta">
+          <img class="author-profile-image" src="https://media-exp1.licdn.com/dms/image/C4D03AQEHaQ5Kc2cAmw/profile-displayphoto-shrink_200_200/0?e=1609372800&amp;v=beta&amp;t=yheJJ4d2GWxJdNd7ZB9vEGQ8KLbsVAdwEaODYoIILy8" alt="Author" />
+          <span class="post-card-author"><a href="/">Douglas Braga</a></span>
+      </footer>
+    </div>
+</article>
+      
+      
+      <article class="post-card post"> 
+    
+    <a class="post-card-image-link" href="/post/tidytext/">
+      <div class="post-card-image" style="background-image: url(/defimg/4.jpg)"></div>
+    </a>    
     
 
+    <div class="post-card-content">
+      <a class="post-card-content-link" href="/post/tidytext/">
+          <header class="post-card-header">
+              <span class="post-card-tags">
+              #Mineração de Dados 
+              #Texto 
+              #Tidy 
+              #R  </span>
+              
+              <h2 class="post-card-title">Mineração de Textos - Uma Abordagem Tidy</h2>
+          </header>
+          <section class="post-card-excerpt">
+              
+                <p>1 O formato tidy para texto 1.1 A diferença entre o formato tidy e os demais 1.2 A função unnest_tokens 1.3 Obra de Jane Austen no formato Tidy 1.4 O pacote gutenbergr 1.4.1 H.G. Wells 1.4.2 Bronte     Primeiramente serão instalados os pacotes que serão utilizados.
+list.of.packages &lt;- c( &quot;tidyverse&quot;, &quot;gutenbergr&quot;, &quot;tidytext&quot; ) is.instaled &lt;- list.of.packages %in% installed.packages() new.packages &lt;- list.of.packages[!(is.instaled)] if(length(new.packages)) install.packages(new.packages) library(tidyverse) library(magrittr) 1 O formato tidy para texto Usar o princípio tidy é útil pois torna a manipulação de dados mais simples e efetiva, isso também serve para dados textuais, a estrutura tidy tem a seguinte estrutura: ...  </p>
+              
+          </section>
+      </a>
+
+      <footer class="post-card-meta">
+          <img class="author-profile-image" src="https://media-exp1.licdn.com/dms/image/C4D03AQEHaQ5Kc2cAmw/profile-displayphoto-shrink_200_200/0?e=1609372800&amp;v=beta&amp;t=yheJJ4d2GWxJdNd7ZB9vEGQ8KLbsVAdwEaODYoIILy8" alt="Author" />
+          <span class="post-card-author"><a href="/">Douglas Braga</a></span>
+      </footer>
+    </div>
+</article>
+      
+    </div>
+  </div>
+</aside>
+
+<div class="floating-header">
+  <div class="floating-header-logo">
+    <a href="/">
+      
+      <span></span>
+    </a>
+  </div>
+  <span class="floating-header-divider">&mdash;</span>
+  <div class="floating-header-title">Uma análise da Sitcom Friends</div>
+  <div class="floating-header-share">
+    <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/></svg>
+    </div>
     
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'Ua-93877401-1', 'auto');
-	
-	ga('send', 'pageview');
-}
+    <a class="floating-header-share-tw" href="https://twitter.com/share?text=Uma%20an%c3%a1lise%20da%20Sitcom%20Friends&amp;url=%2fpost%2ffriends-analysis%2f"
+          onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+      </a>
+      <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=%2fpost%2ffriends-analysis%2f"
+          onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+      </a>
+  </div>
+
+  <progress class="progress" value="0">
+    <div class="progress-container">
+      <span class="progress-bar"></span>
+    </div>
+  </progress>
+</div>
+
+
+
+<footer class="site-footer outer">
+  <div class="site-footer-content inner">
+    <section class="copyright" style="line-height: 1.3em;">
+      <a href="/">dobraga</a> © 2020 <br>
+      <span style="font-size: 0.8em; color: #555;">Hugo port of <a href="https://github.com/TryGhost/Casper">Casper 2.1.7</a> by <a href="https://www.telematika.org">EM</a></span>
+    </section>
+    <nav class="site-footer-nav">
+        <a href="/">Latest Posts</a>
+        
+        
+        <a href="https://github.com/dobraga" target="_blank" rel="noopener">Github</a>
+        <a href="https://www.linkedin.com/in/douglas-braga-904495b5" target="_blank" rel="noopener">LinkedIn</a>
+        
+    </nav>  
+  </div>
+</footer>
+
+</div>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    <script>
+
+
+
+
+
+$(document).ready(function () {
+    
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
 </script>
-
-
-    
-
-    
-
-  </body>
-
-</html>
+</body></html>

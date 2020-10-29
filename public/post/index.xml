@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on dobraga</title>
+    <title>Posts on </title>
     <link>/post/</link>
-    <description>Recent content in Posts on dobraga</description>
+    <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>pt-br</language>
+    <language>pt-BR</language>
     <lastBuildDate>Wed, 23 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
@@ -13,10 +13,10 @@
     
     <item>
       <title>Aprendizagem por reforço</title>
-      <link>/post/reinforcement_learning/</link>
+      <link>/post/aprendizagem-por-refor%C3%A7o/</link>
       <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/reinforcement_learning/</guid>
+      <guid>/post/aprendizagem-por-refor%C3%A7o/</guid>
       <description>   1 Introdução   1 Introdução  </description>
     </item>
     
@@ -26,8 +26,8 @@
       <pubDate>Sun, 13 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>/post/friends-analysis/</guid>
-      <description>Para essa análise serão utilizados os seguintes pacotes:
-list.of.packages &amp;lt;- c( &amp;quot;tidyverse&amp;quot;, &amp;quot;httr&amp;quot;, &amp;quot;furrr&amp;quot;, &amp;quot;tictoc&amp;quot; ) is.instaled &amp;lt;- list.of.packages %in% installed.packages() new.packages &amp;lt;- list.of.packages[!(is.instaled)] if(length(new.packages)) install.packages(new.packages) library(tidyverse) Segundo a WikiPedia: &#34;Friends é uma sitcom americana criada por David Crane e Marta Kauffman e apresentada pela rede de televisão NBC entre 22 de setembro de 1994 e 6 de maio de 2004, com um total de 236 episódios. A série girava em torno de um grupo de amigos que vivia no bairro de Greenwich Village, na ilha de Manhattan, na cidade de Nova York.</description>
+      <description>1 Friends 1.1 Web Scraping 1.2 Análises 1.2.1 Série Temporal 1.2.2 Text Mining     Para essa análise serão utilizados os seguintes pacotes:
+list.of.packages &amp;lt;- c( &amp;quot;tidyverse&amp;quot;, &amp;quot;httr&amp;quot;, &amp;quot;furrr&amp;quot;, &amp;quot;tictoc&amp;quot; ) is.instaled &amp;lt;- list.of.packages %in% installed.packages() new.packages &amp;lt;- list.of.packages[!(is.instaled)] if(length(new.packages)) install.packages(new.packages) library(tidyverse) 1 Friends Segundo a WikiPedia: &#34;Friends é uma sitcom americana criada por David Crane e Marta Kauffman e apresentada pela rede de televisão NBC entre 22 de setembro de 1994 e 6 de maio de 2004, com um total de 236 episódios.</description>
     </item>
     
     <item>

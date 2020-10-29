@@ -1,0 +1,379 @@
+---
+title: "Mineração de Textos - Uma Abordagem Tidy"
+author: ~
+date: '2020-08-08'
+slug: tidytext
+categories: ["R"]
+tags: ["Mineração de Dados", "Texto", "Tidy", "R"]
+output:
+  blogdown::html_page:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    df_print: paged
+    max.print: 20
+---
+
+Primeiramente serão instalados os pacotes que serão utilizados.
+
+```{r warning=F, message=F}
+list.of.packages <- c(
+  "tidyverse", "gutenbergr", "tidytext"
+)
+
+is.instaled <- list.of.packages %in% installed.packages()
+new.packages <- list.of.packages[!(is.instaled)]
+if(length(new.packages)) install.packages(new.packages)
+
+library(tidyverse)
+library(magrittr)
+```
+
+# O formato *tidy* para texto
+
+Usar o princípio *tidy* é útil pois torna a manipulação de 
+dados mais simples e efetiva, isso também serve para dados textuais, a 
+estrutura *tidy* tem a seguinte estrutura:
+
+- Cada variável é uma coluna;
+- Cada observação é uma linha;
+- Cada variável deve possuir apenas um tipo.
+
+Sendo assim, é definido que o formato *tidy* para texto é uma tabela com um 
+token por linha, o token é a unidade minima de análise, como por exemplo 
+palavras, estamos interessados em utilizar para uma análisem e tokenização é o 
+processo de separar o texto em tokens. Esse formato é diferente do formato que
+é utilizado frequentemente, com frases ou matriz de documentos e termos.
+
+## A diferença entre o formato *tidy* e os demais
+
+Como comentado anteriormente, o formato *tidy* de texto é definido como uma 
+tabela possuindo um token por linha. Estruturar dados de texto dessa maneira 
+significa que eles estão em conformidade com os princípios de dados organizados 
+e podem ser manipulados com um conjunto de ferramentas consistentes. Vale a pena
+contrastar com as maneiras como o texto é geralmente armazenado nas abordagens 
+de mineração de texto.
+
+- **String**: Textos, com certeza, pordem ser armazenados em formato de string,
+ou em vetores de strings;
+
+- **Corpus**: Esse tipo de objeto normalmente contem o texto bruto com alguns 
+metadados e detalhes adicionais;
+
+- **Matriz de documentos e termos**: Esse tipo de representação é uma matriz
+esparsa, ou seja, uma matriz onde muitas colunas não possuem valores, onde cada
+linha é um documento que será analisado, e cada coluna é uma palavra. 
+Normalmente são preenchidos com a quantidade de aparições no documento 
+ou td-idf.
+
+Primeiramente, será analisado em como é feita a transformação e análise no 
+formato *tidy*.
+
+## A função `unnest_tokens`
+
+Emily Dickinson escreveu um texto adorável.
+
+```{r}
+text <- c("Because I could not stop for Death -",
+          "He kindly stopped for me -",
+          "The Carriage held but just Ourselves -",
+          "and Immortality")
+
+text
+```
+
+Por enquanto esse é um vetor comum de texto que queremos analisar. Para 
+transformar em formato *tidy*, primeiramente é nescessário criar um data frame.
+
+```{r}
+text_df <- tibble(line = 1:4, text = text)
+text_df
+```
+
+Nesse primeiro exemplo, temos apenas um documento, que neste caso é um poema,
+mais a frente serão utilizados exemplos com mais documentos.
+
+Para transformar no formato *tidy*, é nescessário fazer a quebra deste texto
+em tokens (esse processo de chama *tokenization*), para isso, será utilizada
+a função `unnest_tokens`.
+
+```{r}
+tidytext::unnest_tokens(
+  text_df, 
+  output = word, 
+  input = text
+)
+```
+
+Essa função necessita de três argumentos básicos, o primeiro precisa ser o 
+data frame, depois o nome da coluna que será criada com os tokens, e a coluna
+de entrada
+
+
+## Obra de Jane Austen no formato *Tidy*
+
+Vamos usar o texto dos 6 romances completos e publicados de Jane Austen do 
+pacote janeaustenr (Silge 2016) e transformá-los para o formato *tidy*. 
+O pacote `janeaustenr` fornece esses textos linha por linha, em que uma linha, 
+neste contexto, é uma linha de cada livro. 
+
+Serão criados dois campos um para marcar a linha em questão para manter o 
+controle do formato original e um para o capítulo.
+
+```{r}
+original_books <- janeaustenr::austen_books() %>% 
+  group_by(book) %>% 
+  mutate(
+    rn = row_number(),
+    chapter = str_detect(
+      text,
+      regex(
+        "^chapter [\\divxlc]", 
+        ignore_case = TRUE
+      )
+    ) %>% as.integer()
+  ) %>% 
+  ungroup()
+
+head(original_books, 20)
+```
+
+Agora as linhas serão quebradas em tokens utilizando a função `unnest_tokens`.
+
+```{r}
+tidy_books <- original_books %>% 
+  tidytext::unnest_tokens(word, text)
+
+head(tidy_books, 20)
+```
+
+```{r}
+head(tidytext::stop_words,20)
+```
+
+Agora serão removidos as palavras que não acrescentam informação a nossa 
+análise.
+
+```{r, message=F}
+tidy_books %<>% 
+  anti_join(
+    tidytext::stop_words, 
+    by = c("word" = "word")
+  )
+
+head(tidy_books, 20)
+```
+
+Quais são as palavras mais utilizadas?
+
+```{r}
+tidy_books %>% 
+  count(word, sort=T) %>% 
+  filter(n > 600) %>% 
+  mutate(word = reorder(word, n)) %>% 
+  ggplot(aes(n, word)) + 
+  geom_col()
+```
+
+
+## O pacote gutenbergr
+
+O pacote [`gutenbergr`](https://ropensci.org/tutorials/gutenbergr_tutorial/) 
+fornece acesso ao repositório de livros do [**projeto Gutenberg**](https://www.gutenberg.org/wiki/PT_Principal), 
+que segundo o próprio site, "O Project Gutenberg oferece-lhe mais de 38.000 
+livros eletrónicos gratuitos: escolha entre livros grátis em formato epub ou 
+livros grátis em formato kindle, descarregue-os ou leia-os em linha.".
+
+### H.G. Wells
+
+Para encontrar os id's dos livros do escritor H.G. Wells, pode realizar o 
+seguinte filtro:
+
+```{r}
+gutenbergr::gutenberg_metadata %>% 
+  filter(grepl("Wells, H. G.", author))
+```
+
+Para pegar os dados, quebrar em diversas linhas e remover stop words, podemos:
+
+```{r, message=F}
+hgwells <- gutenbergr::gutenberg_download(
+  c(35, 36, 159, 5230)
+)
+
+tidy_hgwells <- hgwells %>%
+  tidytext::unnest_tokens(word, text) %>%
+  anti_join(tidytext::stop_words)
+
+head(tidy_hgwells, 20)
+```
+
+Quais são as palavras mais utilizadas?
+
+```{r}
+tidy_hgwells %>%
+  count(word, sort = TRUE) %>%
+  filter(n > 150) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word)) +
+  geom_col()
+```
+
+### Bronte
+
+Fazendo o mesmo tratamento para os livros do Bronte, temos:
+
+```{r, message=F}
+bronte <- gutenbergr::gutenberg_download(
+  c(1260, 768, 969, 9182, 767)
+)
+
+tidy_bronte <- bronte %>%
+  tidytext::unnest_tokens(word, text) %>%
+  anti_join(tidytext::stop_words)
+
+tidy_bronte %>%
+  count(word, sort = TRUE) %>%
+  filter(n > 500) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word)) +
+  geom_col()
+```
+
+Abaixo juntaremos as três bases anteriores, adicionando a proporção de vezes
+que cada palavra é utilizada.
+
+```{r}
+frequency <- bind_rows(
+  mutate(tidy_bronte, author = "Brontë Sisters"),
+  mutate(tidy_hgwells, author = "H.G. Wells"),
+  mutate(tidy_books, author = "Jane Austen")
+) %>%
+  mutate(
+    word = stringr::str_extract(word, "[a-z']+")
+  ) %>%
+  count(author, word) %>%
+  mutate(prop = n/sum(n)) %>%
+  select(-n) %>%
+  pivot_wider(id_cols = word, names_from = author, values_from = prop)
+
+frequency
+```
+
+Utilizando a autora Jane Austen como base e comparando a proporção de 
+utilização de palavras para os dois outros autores.
+
+```{r}
+frequency_longer <- frequency %>%
+  pivot_longer(
+    `Brontë Sisters`:`H.G. Wells`, 
+    names_to = "author", values_to = "proportion"
+  ) %>%
+  na.omit()
+
+head(frequency_longer, 20)
+```
+
+```{r}
+frequency_longer %>% 
+  ggplot(
+    aes(
+      x = proportion,
+      y = `Jane Austen`,
+      color = abs(`Jane Austen` - proportion)
+    )
+  ) +
+  geom_abline(color = "gray40", lty = 2) +
+  geom_jitter(
+    alpha = 0.1, size = 2.5, width = 0.3, height = 0.3
+  ) +
+  geom_text(
+    aes(label = word),
+    check_overlap = TRUE, vjust = 1.5
+  ) +
+  scale_x_log10(
+    labels = scales::percent_format()
+  ) +
+  scale_y_log10(
+    labels = scales::percent_format()
+  ) +
+  scale_color_gradient(
+    limits = c(0, 0.001), low = "darkslategray4",
+    high = "gray75"
+  ) +
+  facet_wrap(~author, ncol = 2) +
+  theme(legend.position="none") +
+  labs(y = "Jane Austen", x = NULL)
+```
+
+No gráfico acima temos a comparação entre a proporção de utilização das palavras
+por autores, com base na autora Jane Austen.
+
+<!-- ```{r} -->
+<!-- cor.test( -->
+<!--   data = frequency[frequency$author == "Brontë Sisters",], -->
+<!--   ~ proportion + `Jane Austen` -->
+<!-- ) -->
+<!-- ``` -->
+
+
+<!-- ```{r} -->
+<!-- cor.test( -->
+<!--   data = frequency[frequency$author == "H.G. Wells",], -->
+<!--   ~ proportion + `Jane Austen` -->
+<!-- ) -->
+<!-- ``` -->
+
+
+<!-- # Análise de sentimentos (próximos passos) -->
+
+<!-- ```{r} -->
+<!-- tidytext::get_sentiments("afinn") %>% head(20) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- tidytext::get_sentiments("bing") %>% head(20) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- tidytext::get_sentiments("nrc") %>% head(20) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- tidy_books %>% head(20) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- nrc_joy <- tidytext::get_sentiments("nrc") %>% -->
+<!--   filter(sentiment == "joy") -->
+<!-- ``` -->
+
+<!-- ```{r, message=F} -->
+<!-- tidy_books %>% -->
+<!--   filter(book=="Emma") %>% -->
+<!--   inner_join(nrc_joy) %>% -->
+<!--   count(word, sort=T) %>% -->
+<!--   head(20) -->
+<!-- ``` -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
