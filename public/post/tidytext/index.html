@@ -1,130 +1,118 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR" />
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Language" content="pt">
+    <title>Mineração de Textos - Uma Abordagem Tidy &middot; </title>
 
-    <meta name="author" content="Douglas Braga">
-    <meta name="description" content="1 O formato tidy para texto 1.1 A diferença entre o formato tidy e os demais 1.2 A função unnest_tokens 1.3 Obra de Jane Austen no formato Tidy 1.4 O pacote gutenbergr 1.4.1 H.G. Wells 1.4.2 Bronte     Primeiramente serão instalados os pacotes que serão utilizados.
-list.of.packages &lt;- c( &quot;tidyverse&quot;, &quot;gutenbergr&quot;, &quot;tidytext&quot; ) is.instaled &lt;- list.of.packages %in% installed.packages() new.packages &lt;- list.of.packages[!(is.instaled)] if(length(new.packages)) install.packages(new.packages) library(tidyverse) library(magrittr) 1 O formato tidy para texto Usar o princípio tidy é útil pois torna a manipulação de dados mais simples e efetiva, isso também serve para dados textuais, a estrutura tidy tem a seguinte estrutura:">
-    <meta name="keywords" content="">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="canonical" href="/post/tidytext/" />
+
+     <meta name="description" content="1 O formato tidy para texto 1.1 A diferença entre o formato tidy e os demais 1.2 A função unnest_tokens 1.3 Obra de Jane Austen no formato Tidy 1.4 O pacote gut" /> 
+
+     
     
-      <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
-    
-
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Mineração de Textos - Uma Abordagem Tidy"/>
-<meta name="twitter:description" content="1 O formato tidy para texto 1.1 A diferença entre o formato tidy e os demais 1.2 A função unnest_tokens 1.3 Obra de Jane Austen no formato Tidy 1.4 O pacote gutenbergr 1.4.1 H.G. Wells 1.4.2 Bronte     Primeiramente serão instalados os pacotes que serão utilizados.
-list.of.packages &lt;- c( &quot;tidyverse&quot;, &quot;gutenbergr&quot;, &quot;tidytext&quot; ) is.instaled &lt;- list.of.packages %in% installed.packages() new.packages &lt;- list.of.packages[!(is.instaled)] if(length(new.packages)) install.packages(new.packages) library(tidyverse) library(magrittr) 1 O formato tidy para texto Usar o princípio tidy é útil pois torna a manipulação de dados mais simples e efetiva, isso também serve para dados textuais, a estrutura tidy tem a seguinte estrutura:"/>
-
-    <meta property="og:title" content="Mineração de Textos - Uma Abordagem Tidy" />
-<meta property="og:description" content="1 O formato tidy para texto 1.1 A diferença entre o formato tidy e os demais 1.2 A função unnest_tokens 1.3 Obra de Jane Austen no formato Tidy 1.4 O pacote gutenbergr 1.4.1 H.G. Wells 1.4.2 Bronte     Primeiramente serão instalados os pacotes que serão utilizados.
-list.of.packages &lt;- c( &quot;tidyverse&quot;, &quot;gutenbergr&quot;, &quot;tidytext&quot; ) is.instaled &lt;- list.of.packages %in% installed.packages() new.packages &lt;- list.of.packages[!(is.instaled)] if(length(new.packages)) install.packages(new.packages) library(tidyverse) library(magrittr) 1 O formato tidy para texto Usar o princípio tidy é útil pois torna a manipulação de dados mais simples e efetiva, isso também serve para dados textuais, a estrutura tidy tem a seguinte estrutura:" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/post/tidytext/" />
-<meta property="article:published_time" content="2020-08-08T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-08-08T00:00:00+00:00" />
-
-
     
-      <base href="/post/tidytext/">
-    
-    <title>
-  Mineração de Textos - Uma Abordagem Tidy · dobraga
-</title>
+ 
+    <meta name="twitter:title" content="Mineração de Textos - Uma Abordagem Tidy"/>
+    <meta name="twitter:description" content="1 O formato tidy para texto 1.1 A diferença entre o formato tidy e os demais 1.2 A função unnest_tokens 1.3 Obra de Jane Austen no formato Tidy 1.4 O pacote gut"/>
+    <meta name="twitter:url" content="/post/tidytext/" />
+    <meta name="twitter:site" content="@"/>
 
-    
-      <link rel="canonical" href="/post/tidytext/">
+    <meta property="og:site_name" content="" />
+    <meta property="og:title" content="Mineração de Textos - Uma Abordagem Tidy &middot; Douglas Braga" />
+    <meta property="og:url" content="/post/tidytext/" />
     
 
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="1 O formato tidy para texto 1.1 A diferença entre o formato tidy e os demais 1.2 A função unnest_tokens 1.3 Obra de Jane Austen no formato Tidy 1.4 O pacote gut" />
 
-    
-      
-      
-      <link rel="stylesheet" href="/css/coder.min.9836c03fe5c87d102278a33e86d0591ef36c89b1e17e8e547ebf84c05cee010e.css" integrity="sha256-mDbAP&#43;XIfRAieKM&#43;htBZHvNsibHhfo5Ufr&#43;EwFzuAQ4=" crossorigin="anonymous" media="screen" />
-    
+    <meta property="article:published_time" content="2020-08-08T00:00:00Z" />
+    <meta property="article:tag" content="Mineração de Dados" /><meta property="article:tag" content="Texto" /><meta property="article:tag" content="Tidy" /><meta property="article:tag" content="R" />
 
-    
-
-    
-      
-        
-        
-        <link rel="stylesheet" href="/css/coder-dark.min.717236c74e0a5208ef73964a9f44c6b443b689a95b270d8b2a40d0c012460dac.css" integrity="sha256-cXI2x04KUgjvc5ZKn0TGtEO2ialbJw2LKkDQwBJGDaw=" crossorigin="anonymous" media="screen" />
-      
-    
-
-    
-
-    
-
-    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
-
-    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-    <link rel="apple-touch-icon"  sizes="180x180" href="/images/apple-touch-icon.png">
 
     <meta name="generator" content="Hugo 0.74.3" />
-  </head>
-  
-  
-  
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="/built/screen.css" /> 
+    <link rel="stylesheet" type="text/css" href="/css/casper-two.css" /> 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" />
     
-  
-  <body class="colorscheme-auto"
-        onload=" twemoji.parse(document.body); "
-  >
-    <main class="wrapper">
-      <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="/">
-      dobraga
-    </a>
-    
-      <span id="dark-mode-toggle" class="float-right">
-        <i class="fas fa-adjust fa-fw"></i>
-      </span>
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fas fa-bars fa-fw"></i>
-      </label>
-      <ul class="navigation-list">
-        
-          
-            <li class="navigation-item">
-              <a class="navigation-link" href="/post/">Posts</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link" href="/about/">Sobre</a>
-            </li>
-          
-        
-        
-        <li class="navigation-item separator">
-          <span>|</span>
-        </li>
-      </ul>
-    
-  </section>
-</nav>
+
+     
+
+</head>
 
 
-      <div class="content">
+<body class="post-template">
+  <div class="site-wrapper"> 
+
+<header class="site-header outer">
+  <div class="inner">
+    <nav class="site-nav">
+      <div class="site-nav-left">
+
+        <ul class="nav" role="menu">
         
-  <section class="container page">
-  <article>
-    <header>
-      <h1>Mineração de Textos - Uma Abordagem Tidy</h1>
+        
+        
+            <li class="" role="menuitem">
+              <a href="/">Home</a>
+            </li>
+        
+            <li class="" role="menuitem">
+              <a href="about/">Sobre</a>
+            </li>
+        
+            <li class="" role="menuitem">
+              <a href="/categories/">Categorias</a>
+            </li>
+        
+      </ul></div>
+
+      <div class="site-nav-right">
+        <div class="social-links">
+                    
+
+                    
+
+                    <a class="social-link" href="https://github.com/dobraga" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+
+                    <a class="social-link" href="https://www.linkedin.com/in/douglas-braga-904495b5" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 50 512 512"><path d="M150.65,100.682c0,27.992-22.508,50.683-50.273,50.683c-27.765,0-50.273-22.691-50.273-50.683 C50.104,72.691,72.612,50,100.377,50C128.143,50,150.65,72.691,150.65,100.682z M143.294,187.333H58.277V462h85.017V187.333z M279.195,187.333h-81.541V462h81.541c0,0,0-101.877,0-144.181c0-38.624,17.779-61.615,51.807-61.615 c31.268,0,46.289,22.071,46.289,61.615c0,39.545,0,144.181,0,144.181h84.605c0,0,0-100.344,0-173.915 s-41.689-109.131-99.934-109.131s-82.768,45.369-82.768,45.369V187.333z" /></svg></a>
+
+                    
+        </div>  
+            
+      </div>
+
+    </nav>  
+
+  </div>
+</header>
+
+<main id="site-main" class="site-main outer" role="main">
+  <div class="inner">
+    
+      <article class="post-full post"> 
+    <header class="post-full-header">
+        <section class="post-full-meta">
+            <time class="post-full-meta-date" datetime="2020-08-08">8 August 2020</time>
+                <span class="date-divider">/</span> <a href="/tags/minera%C3%A7%C3%A3o-de-dados/">#Mineração de Dados</a>&nbsp;<a href="/tags/texto/">#Texto</a>&nbsp;
+        </section>
+        <h1 class="post-full-title">Mineração de Textos - Uma Abordagem Tidy</h1>
     </header>
-
     
+    <figure class="post-full-image" style="background-image: url(/defimg/4.jpg)">
+    </figure>
+
+    <section class="post-full-content">
+        <div class="kg-card-markdown">
+        
 <link href="/rmarkdown-libs/pagedtable/css/pagedtable.css" rel="stylesheet" />
 <script src="/rmarkdown-libs/pagedtable/js/pagedtable.js"></script>
 
@@ -465,60 +453,189 @@ por autores, com base na autora Jane Austen.</p>
 </div>
 </div>
 </div>
-
-  </article>
-</section>
-
-  
-
-      </div>
-
-      
-  <footer class="footer">
-    <section class="container">
-      
-      
-        ©
-        
-        2020
-         Douglas Braga 
-      
-      
-         · 
-         <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
-      
-      
+    
+        </div>
     </section>
-  </footer>
 
-    </main>
-
+    <footer class="post-full-footer">
+      <section class="author-card">
+        <img class="author-profile-image" src="https://media-exp1.licdn.com/dms/image/C4D03AQEHaQ5Kc2cAmw/profile-displayphoto-shrink_200_200/0?e=1609372800&amp;v=beta&amp;t=yheJJ4d2GWxJdNd7ZB9vEGQ8KLbsVAdwEaODYoIILy8" alt="Author" />
+        <section class="author-card-content">
+            <h4 class="author-card-name"><a href="/">Douglas Braga</a></h4>
+                <p></p>
+        </section>
+      </section>
+    </footer>
+</article>
     
+    
+    
+
+  </div>
+</main>
+
+
+<aside class="read-next outer">
+  <div class="inner">
+    <div class="read-next-feed">      
       
-      <script src="/js/dark-mode.min.0213e1773e6d1c5a644f847c67a6f8abac49a3776e2976f6008038af8c5b76a1.js"></script>
+
+      
+      <article class="post-card post"> 
+    
+    <a class="post-card-image-link" href="/post/friends-analysis/">
+      <div class="post-card-image" style="background-image: url(/defimg/6.jpg)"></div>
+    </a>    
     
 
+    <div class="post-card-content">
+      <a class="post-card-content-link" href="/post/friends-analysis/">
+          <header class="post-card-header">
+              <span class="post-card-tags">
+              #webscraping  </span>
+              
+              <h2 class="post-card-title">Uma análise da Sitcom Friends</h2>
+          </header>
+          <section class="post-card-excerpt">
+              
+                <p>1 Friends 1.1 Web Scraping 1.2 Análises 1.2.1 Série Temporal 1.2.2 Text Mining     Para essa análise serão utilizados os seguintes pacotes:
+list.of.packages &lt;- c( &quot;tidyverse&quot;, &quot;httr&quot;, &quot;furrr&quot;, &quot;tictoc&quot; ) is.instaled &lt;- list.of.packages %in% installed.packages() new.packages &lt;- list.of.packages[!(is.instaled)] if(length(new.packages)) install.packages(new.packages) library(tidyverse) 1 Friends Segundo a WikiPedia: "Friends é uma sitcom americana criada por David Crane e Marta Kauffman e apresentada pela rede de televisão NBC entre 22 de setembro de 1994 e 6 de maio de 2004, com um total de 236 episódios. ...  </p>
+              
+          </section>
+      </a>
+
+      <footer class="post-card-meta">
+          <img class="author-profile-image" src="https://media-exp1.licdn.com/dms/image/C4D03AQEHaQ5Kc2cAmw/profile-displayphoto-shrink_200_200/0?e=1609372800&amp;v=beta&amp;t=yheJJ4d2GWxJdNd7ZB9vEGQ8KLbsVAdwEaODYoIILy8" alt="Author" />
+          <span class="post-card-author"><a href="/">Douglas Braga</a></span>
+      </footer>
+    </div>
+</article>
+      
+      
+    </div>
+  </div>
+</aside>
+
+<div class="floating-header">
+  <div class="floating-header-logo">
+    <a href="/">
+      
+      <span></span>
+    </a>
+  </div>
+  <span class="floating-header-divider">&mdash;</span>
+  <div class="floating-header-title">Mineração de Textos - Uma Abordagem Tidy</div>
+  <div class="floating-header-share">
+    <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/></svg>
+    </div>
+    
+    <a class="floating-header-share-tw" href="https://twitter.com/share?text=Minera%c3%a7%c3%a3o%20de%20Textos%20-%20Uma%20Abordagem%20Tidy&amp;url=%2fpost%2ftidytext%2f"
+          onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+      </a>
+      <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=%2fpost%2ftidytext%2f"
+          onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+      </a>
+  </div>
+
+  <progress class="progress" value="0">
+    <div class="progress-container">
+      <span class="progress-bar"></span>
+    </div>
+  </progress>
+</div>
+
+
+
+<footer class="site-footer outer">
+  <div class="site-footer-content inner">
+    <section class="copyright" style="line-height: 1.3em;">
+      <a href="/">dobraga</a> © 2020 <br>
+      <span style="font-size: 0.8em; color: #555;">Hugo port of <a href="https://github.com/TryGhost/Casper">Casper 2.1.7</a> by <a href="https://www.telematika.org">EM</a></span>
+    </section>
+    <nav class="site-footer-nav">
+        <a href="/">Latest Posts</a>
+        
+        
+        <a href="https://github.com/dobraga" target="_blank" rel="noopener">Github</a>
+        <a href="https://www.linkedin.com/in/douglas-braga-904495b5" target="_blank" rel="noopener">LinkedIn</a>
+        
+    </nav>  
+  </div>
+</footer>
+
+</div>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    <script>
+
+
+
+
+
+$(document).ready(function () {
+    
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
     
 
-    
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'Ua-93877401-1', 'auto');
-	
-	ga('send', 'pageview');
-}
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
 </script>
-
-
-    
-
-    
-
-  </body>
-
-</html>
+</body></html>

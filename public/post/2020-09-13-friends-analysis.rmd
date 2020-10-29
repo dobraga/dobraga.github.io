@@ -28,13 +28,15 @@ if(length(new.packages)) install.packages(new.packages)
 library(tidyverse)
 ```
 
+# Friends
+
 Segundo a WikiPedia: "Friends é uma sitcom americana criada por David Crane e 
 Marta Kauffman e apresentada pela rede de televisão NBC entre 22 de setembro 
 de 1994 e 6 de maio de 2004, com um total de 236 episódios. A série girava em 
 torno de um grupo de amigos que vivia no bairro de Greenwich Village, na ilha 
 de Manhattan, na cidade de Nova York.
 
-programa já foi transmitido em dezenas de países e as reprises de seus 
+O programa já foi transmitido em dezenas de países e as reprises de seus 
 episódios continuam com boas audiências. O seriado arrecadou seis Prêmios 
 Emmy (incluindo um na categoria Emmy do Primetime para Melhor Série de 
 Comédia), um Globo de Ouro, dois SAG Awards, e 56 outros prêmios com 152 
@@ -42,41 +44,41 @@ nomeações. Em 2002, a revista especializada em televisão TV Guide lançou uma
 lista com os 50 melhores programas de televisão de todos os tempos, e Friends 
 constava em 21º lugar."
 
-# Web Scraping
+## Web Scraping
 
 Para essa análise será utilizada a base do IMDB, onde temos diversas informações
-de cada episódio da série. Primeiro vamos buscar as informações gerais do 
+de cada episódio da série. Primeiro vamos buscar as informações gerais do
 episódio.
 
-A função abaixo, navega até a página da temporada X e cria um data frame com os 
+A função abaixo, navega até a página da temporada X e cria um data frame com os
 títulos do episódios, site com as informações detalhadas e número dos episódios.
 
 ```{r}
 pega_lista_ep <- function(season=1){
   url <- paste0("https://www.imdb.com/title/tt0108778/episodes?season=", season)
-  page <- httr::GET(url) %>% 
+  page <- httr::GET(url) %>%
     xml2::read_html()
-  
+
   tag <- xml2::xml_find_all(
-    page, 
+    page,
     '//*[@id="episodes_content"]/div[2]/div[2]/div/div[2]/strong/a'
   )
-  
+
   tibble(
     ep_name = xml2::xml_attr(tag, "title"),
     url = paste0("https://www.imdb.com/", xml2::xml_attr(tag, "href"))
-  ) %>% 
+  ) %>%
     mutate(season = season, nu_ep_temp = row_number())
 }
 
 head(pega_lista_ep(1), 10)
 ```
 
-Agora buscando as informações de todas as temporadas e numerando os episódios, 
+Agora buscando as informações de todas as temporadas e numerando os episódios,
 temos:
 
 ```{r}
-df <-  purrr::map_df(1:10, pega_lista_ep) %>% 
+df <-  purrr::map_df(1:10, pega_lista_ep) %>%
   mutate(
     nu_ep = row_number()
   )
@@ -89,56 +91,56 @@ a descrição do episódio e avaliação que serão o foco dessa análise.
 
 ```{r}
 pega_info_ep <- function(url){
-  page <- httr::GET(url) %>% 
-    xml2::read_html() 
-  
+  page <- httr::GET(url) %>%
+    xml2::read_html()
+
   ratingValue <- xml2::xml_find_all(
     page,
     '//*[@id="title-overview-widget"]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/strong/span'
   ) %>% xml2::xml_text() %>% parse_number()
-  
+
   ratingCount <- xml2::xml_find_all(
     page,
     '//*[@id="title-overview-widget"]/div[1]/div[2]/div[2]/div[1]/div[1]/a/span'
   ) %>% xml2::xml_text() %>% parse_number()
-  
+
   diretor <- xml2::xml_find_all(
     page,
     '//*[@id="title-overview-widget"]/div[2]/div[2]/div[1]/div[2]/a'
   ) %>% xml2::xml_text()
-  
+
   summarys <- paste0(
     "https://www.imdb.com",
-    xml2::xml_find_all(page, '//*[@id="titleStoryLine"]/span[2]/a[1]') %>% 
+    xml2::xml_find_all(page, '//*[@id="titleStoryLine"]/span[2]/a[1]') %>%
       xml2::xml_attr("href")
-  ) %>% httr::GET(.) %>% 
-    xml2::read_html() %>% 
+  ) %>% httr::GET(.) %>%
+    xml2::read_html() %>%
     xml2::xml_find_all(
       '//*[@id="plot-summaries-content" or @id="plot-synopsis-content"]/li'
-    ) %>% 
+    ) %>%
     xml2::xml_text()
-  
+
   arg <- which.max(purrr::map_dbl(summarys, str_length))
-  
-  summary <- summarys[arg] %>% 
-    stringr::str_remove("—.+") %>% 
+
+  summary <- summarys[arg] %>%
+    stringr::str_remove("—.+") %>%
     stringr::str_squish()
-  
+
   tibble(
     url, ratingValue, ratingCount, diretor, summary
   )
 }
 ```
 
-Como isso podemos pegar a informação detalhada de cada episódio, como, por 
+Como isso podemos pegar a informação detalhada de cada episódio, como, por
 exemplo, as informações detalhadas do primeiro episódio:
 
 ```{r}
-t(pega_info_ep("https://www.imdb.com/title/tt0583459/?ref_=ttep_ep1"))
+pega_info_ep("https://www.imdb.com/title/tt0583459/?ref_=ttep_ep1")
 ```
 
-Como temos mais de 200 episódios para buscar as informações seria muito demorado 
-fazer a busca sequencialmente, por isso, será feita uma busca em paralelo, para 
+Como temos mais de 200 episódios para buscar as informações seria muito demorado
+fazer a busca sequencialmente, por isso, será feita uma busca em paralelo, para
 efeito de comparação a busca de 10 episódios sequencialmente demora por volta de:
 
 ```{r}
@@ -158,7 +160,7 @@ x <- furrr::future_map_dfr(df$url[1:10], pega_info_ep)
 tictoc::toc()
 ```
 
-Uma queda considerável no tempo de execução, agora buscando a informações de 
+Uma queda considerável no tempo de execução, agora buscando a informações de
 todos os episódios:
 
 ```{r}
@@ -174,57 +176,50 @@ df <- df %>% left_join(df_ep, by="url")
 head(df, 10)
 ```
 
-# Análises
+## Análises
 
-## Série Temporal
+### Série Temporal
 
 ```{r}
-df %>% 
+df %>%
   ggplot(aes(x = nu_ep, y = ratingValue)) +
   geom_line()
 ```
 
 ```{r}
-df %>% 
-  group_by(season) %>% 
+df %>%
+  group_by(season) %>%
   mutate(
     MeanRatingValue = mean(ratingValue),
     diff = MeanRatingValue - ratingValue
-  ) %>% 
-  ungroup() %>% 
-  ggplot() + 
-  geom_line(aes(x = nu_ep, y = MeanRatingValue)) + 
+  ) %>%
+  ungroup() %>%
+  ggplot() +
+  geom_line(aes(x = nu_ep, y = MeanRatingValue)) +
   geom_segment(aes(x = nu_ep, xend = nu_ep, y = MeanRatingValue, yend = ratingValue)) +
   geom_point(aes(x = nu_ep, y = ratingValue)) +
   scale_y_continuous(breaks = 7:10)
 ```
 
-## Text Mining
+### Text Mining
 
-Fazendo a quebra por tokens e removendo stopwords (palavras sem uso analítico), 
+Fazendo a quebra por tokens e removendo stopwords (palavras sem uso analítico),
 temos:
 
 ```{r}
-df_tokens <- df %>% 
-  select(season, nu_ep_temp, nu_ep, ratingValue, ratingCount, summary) %>% 
-  tidytext::unnest_tokens(word, summary) %>% 
+df_tokens <- df %>%
+  select(season, nu_ep_temp, nu_ep, ratingValue, ratingCount, summary) %>%
+  tidytext::unnest_tokens(word, summary) %>%
   anti_join(tidytext::stop_words, by = "word")
 
 head(df_tokens, 20)
 ```
 
 ```{r}
-df_tokens %>% 
-  group_by(season, word) %>% 
-  summarise(n = n()) %>% 
-  top_n(10, n) %>% 
+df_tokens %>%
+  group_by(season, word) %>%
+  summarise(n = n()) %>%
+  top_n(10, n) %>%
   ggplot(aes(x = n, y = reorder(word, n))) +
   geom_col() + facet_wrap(~season, scales = "free")
 ```
-
-
-
-
-
-
-

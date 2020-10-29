@@ -1,0 +1,21 @@
+---
+title: "Aprendizagem por reforço"
+author: ~
+date: '2020-09-23'
+# slug: friends-analysis
+categories: ["python"]
+tags: ["python"]
+output:
+  blogdown::html_page:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    df_print: paged
+    max.print: 20
+---
+
+<!-- http://incompleteideas.net/book/RLbook2018.pdf -->
+
+# Introdução
+
+

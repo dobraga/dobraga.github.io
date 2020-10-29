@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>python on dobraga</title>
+    <title>python on </title>
     <link>/categories/python/</link>
-    <description>Recent content in python on dobraga</description>
+    <description>Recent content in python on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>pt-br</language>
+    <language>pt-BR</language>
     <lastBuildDate>Wed, 23 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/python/index.xml" rel="self" type="application/rss+xml" />
@@ -13,10 +13,10 @@
     
     <item>
       <title>Aprendizagem por reforço</title>
-      <link>/post/reinforcement_learning/</link>
+      <link>/post/aprendizagem-por-refor%C3%A7o/</link>
       <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/reinforcement_learning/</guid>
+      <guid>/post/aprendizagem-por-refor%C3%A7o/</guid>
       <description>   1 Introdução   1 Introdução  </description>
     </item>
     

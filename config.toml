@@ -1,81 +1,57 @@
-baseurl = "/"
-languageCode = "pt-br"
-defaultContentLanguage = "pt"
-title = "dobraga"
-theme = "hugo-coder"
-googleAnalytics = "Ua-93877401-1"
+baseurl         = "/"
+theme = "hugo-casper-two"
+languageCode    = "pt-BR"
+disqusShortname = ""
+paginate        = 6
+canonifyurls    = true
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
-canonifyurls = true
-pygmentsstyle = "bw"
-pygmentscodefences = true
-pygmentscodefencesguesssyntax = true
-
 [params]
-    author = "Douglas Braga"
-    description = "John Doe's personal website"
-    # keywords = "blog,developer,personal"
-    # info = "Full Stack DevOps and Magician"
+  title       = "Douglas Braga"
+  subtitle    = ""
+  copyright   = "© 2020"
 
-    dateformat = "2 de Jan de 2006"
-    dateformatShort   = "2 Jan"
-    dateformatNum     = "2006-01-02"
-    dateformatNumTime = "2006-01-02 15:04 -0700"
+  description = ""
+  metaDescription = ""
+  googleAnalytics = ""
+  customCSS = []
+  RSSLink = ""
 
-    hideFooter = false
-    hideCredits = false
-    hideCopyright = false
-    since = 2020
+  twitterName = ""
+  fbName = ""
+  githubName = "dobraga"
+  linkedinName = "douglas-braga-904495b5"
+  mediumName = ""
 
-    rtl = false
+  orgName = "dobraga"
 
-    # Specify light/dark colorscheme
-    # Supported values:
-    # "auto" (use preference set by browser)
-    # "dark" (dark background, light foreground)
-    # "light" (light background, dark foreground) (default)
-    colorscheme = "auto"
+  showSupport = true
 
-    # Series see also post count
-    maxSeeAlsoItems = 5
+  author = "Douglas Braga"
+  authorAvatar = "https://media-exp1.licdn.com/dms/image/C4D03AQEHaQ5Kc2cAmw/profile-displayphoto-shrink_200_200/0?e=1609372800&v=beta&t=yheJJ4d2GWxJdNd7ZB9vEGQ8KLbsVAdwEaODYoIILy8"
+  authorLocation = "Rio de Janeiro"
+  authorDescription = ""
 
-    # Enable Twemoji
-    enableTwemoji = true
+  pageNotFoundTitle = "404 - Página não encontrada"
 
-    # Custom CSS
-    custom_css = []
+  #casper or caspertwo
+  singleViewStyle = "casper"
 
-    # Custom JS
-    custom_js = []
-      
-    justifyContent = true 
-    relatedPosts = true
-    code_copy_button = true # Turn on/off the code-copy-button for code-fields
+[permalinks]
+  post = "/post/:slug/"
+
+[[menu.main]]
+  name = "Home"
+  url = "/"
+  weight = 200
   
-    avatarurl = "https://media-exp1.licdn.com/dms/image/C4D03AQEHaQ5Kc2cAmw/profile-displayphoto-shrink_200_200/0?e=1606348800&v=beta&t=A3zjN2TM3F_8aLSYbGWaeINApmIFdX6Xh2ok9Tp_ftE"
-  
-    [[params.social]]
-      name = "github"
-      url = "https://github.com/dobraga"
-      
-    [[params.social]]
-      name = "linkedin"
-      url = "https://www.linkedin.com/in/douglas-braga-904495b5/"
-      
-    [[params.social]]
-      name = "email"
-      url = "mailto:douglasmartinsbraga@gmail.com"  
+[[menu.main]]
+  name = "Sobre"
+  url = "about/"
+  weight = 200
 
-[menu]
+[[menu.main]]
+  name = "Categorias"
+  url = "/categories/"
+  weight = 99
 
-  [[menu.main]]
-    name = "Posts"
-    url = "post/"
-    weight = 10
-
-  [[menu.main]]
-    name = "Sobre"
-    url = "about/"
-    weight = 20
-    
-    
